@@ -132,7 +132,11 @@ header {
     }
 
     #header_buttons .material-symbols-outlined {
-        margin-right: 0;
+        margin-left: 10px;
+    }
+
+    #header_buttons .column{
+        margin: 0px;
     }
 
 
@@ -150,8 +154,10 @@ header {
     header,
     main {
         width: 100%;
-        flex-wrap: wrap;
-        padding: 5px;
         min-width:auto;
+    }
+
+    #cards-container {
+    justify-content: center;
     }
 }
