@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../style/menu/mujprofil.css" type="text/css">
+    <link rel="stylesheet" href="../../style/menu/mujprofil.css" type="text/css">
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <title>Kategorie</title>
@@ -30,12 +30,12 @@
                 <div class="column">
                     <span class="button-text">Prihlaseni</span><!--vlozit odkaz na prihlaseni.html-->
                     <span class="button-subtext">Registrace</span><!--vlozit odkaz na registrace.html-->
-            </div>
-            <div class="column">
-                <span class="material-symbols-outlined">
-                    account_circle
-                </span>
-            </div>
+                </div>
+                <div class="column">
+                    <span class="material-symbols-outlined">
+                        account_circle
+                    </span>
+                </div>
             </button>
         </div>
     </header>
@@ -50,12 +50,17 @@
         </div>
         <div class="container">
             <div class="left-section">
-                <img src="avatar.jpg" alt="avatar" width="50" height="50">
-                <button type="button">Uložit</button>
-                <button type="button">Změnit heslo</button>
+                <nav>
+                    <a href="#">Osobní údaje</a>
+                    <a href="#">Objednávky</a>
+                    <a href="#">Platební údaje</a>
+                    <a href="#">Seznam objednvávek</a>
+                    <a href="#">Statistika</a>
+                </nav>
             </div>
-    
+
             <div class="right-section">
+                <img src="avatar.jpg" alt="avatar" width="50" height="50">
                 <form>
                     <div class="form-group">
                         <label for="jmeno">Jméno:</label>
@@ -90,5 +95,11 @@
                         <input type="text" id="stat" name="stat" required>
                     </div>
                 </form>
+                <button type="button">Uložit</button>
+                <button type="button">Změnit heslo</button>
             </div>
         </div>
+    </main>
+</body>
+
+</html>
