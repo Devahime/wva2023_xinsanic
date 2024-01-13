@@ -30,7 +30,7 @@ def close_db(e=None):
 def init_db():
     db = get_db()
 
-    with current_app.open_resource('database/database.db') as f:
+    with current_app.open_resource('../database/schema.sql') as f:
         db.executescript(f.read().decode('utf8'))
 
 

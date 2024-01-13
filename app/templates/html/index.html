@@ -82,6 +82,14 @@
                     <h3>Restaurant Name</h3>
                 </div>
             </div>
+            {% for restaurac in restaurace %}
+            <div class="card">
+                <img src="restaurant_image.jpg">
+                <div class="card-description">
+                    <h3>{{ restaurace.nazev }}</h3>
+                </div>
+            </div>
+            {% endfor %}
         </div>
 
     </main>
