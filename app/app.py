@@ -37,5 +37,16 @@ def view_vyber_page():
     return render_template('/html/menu/vyberobjednavek.html',
                            nevyrizene=nevyrizene, volne=volne, vyrizene=vyrizene)
 
+@app.route('/statistika')
+def view_vyber_statistika():
+    pocet_objednavek = ObjednavkaService.get_pocet()
+    objednavky = ObjednavkaService.get_all()
+    return render_template('/html/menu/statistika.html',
+                           objednavky=objednavky,
+                           pocet_objednavek = pocet_objednavek
+                           )
+
+
+
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

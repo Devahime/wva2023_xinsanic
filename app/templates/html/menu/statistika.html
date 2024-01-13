@@ -5,10 +5,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../../static/css/objednavky.css" type="text/css">
+    <link rel="stylesheet" href="../../../static/css/statistika.css" type="text/css">
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <title>Objednavky</title>
+    <title>Statistika</title>
 </head>
 
 <body>
@@ -60,7 +60,49 @@
             </div>
 
             <div class="right-section">
-                <h2>Vaše objednávky</h2>
+                <h2>Statistika</h2>
+                <div class="statistics">
+                    <div class="description-frame">
+                        <span class = "description">Počet objednávek</span>
+                    </div>
+                    <div class="inner-frame">
+                        <span class = "value">{{ pocet_objednavek }}</span>
+                    </div>
+                </div>
+                <div class="statistics">
+                    <div class="description-frame">
+                        <span class = "description">Provize z prostredkovani objednavek</span>
+                    </div>
+                    <div class="inner-frame">
+                        <span class = "value">NaN</span>
+                    </div>
+                </div>
+                <div class="statistics">
+                    <div class="description-frame">
+                        <span class = "description">Zisk z dovozu</span>
+                    </div>
+                    <div class="inner-frame">
+                        <span class = "value">NaN</span>
+                    </div>
+                </div>
+                <div class="statistics">
+                    <div class="description-frame">
+                        <span class = "description">Zisk z prostredkovani objednavek</span>
+                    </div>
+                    <div class="inner-frame">
+                        <span class = "value">NaN</span>
+                    </div>
+                </div>
+                <div class="statistics">
+                    <div class="description-frame">
+                        <span class = "description">Celkovy zisk</span>
+                    </div>
+                    <div class="inner-frame">
+                        <span class = "value">NaN</span>
+                    </div>
+                </div>
+                <br>
+                <h2>Všechny objednávky</h2>
                 <table>
                         <tr>
                             <th>Cena</th>
@@ -75,23 +117,6 @@
                         </tr>
                         {% endfor %}
                 </table>
-                <div class="frame">
-                    <div class="inner-frame">
-                        <span class = "value">{{ pocet_objednavek }}</span>
-                    </div>
-                    <div class="description-frame">
-                        <span class = "description">Počet objednávek</span>
-                    </div>
-                </div>
-                
-                <div class="frame">
-                    <div class="inner-frame">
-                        <span class = "value">{{ mnozstevni_sleva }} %</span>
-                    </div>
-                    <div class="description-frame">
-                        <span class = "description">Množstevní sleva</span>
-                    </div>
-                </div>
         </div>
     </main>
 </body>

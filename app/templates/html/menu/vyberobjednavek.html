@@ -62,20 +62,20 @@
             <div class="right-section">
                 <h2>Neodkončené objednávky</h2>
                 <table>
-                        <tr>
-                            <th>ID objednavky</th>
-                            <th>Nazev restaurace</th>
-                            <th>Zakaznik ID</th>
-                            <th>Stav objednávky</th>
-                        </tr>
-                        {% for objednavka in nevyrizene %}
-                        <tr>
-                            <td>{{ objednavka.objednavka_id }}</td>
-                            <td>{{ objednavka.nazev }}</td>
-                            <td>{{ objednavka.uzivatel_id }}</td>
-                            <td>{{ objednavka.stav_objednavky }}</td>
-                        </tr>
-                        {% endfor %}
+                    <tr>
+                        <th>ID objednavky</th>
+                        <th>Nazev restaurace</th>
+                        <th>Zakaznik ID</th>
+                        <th>Stav objednávky</th>
+                    </tr>
+                    {% for objednavka in nevyrizene %}
+                    <tr>
+                        <td>{{ objednavka.objednavka_id }}</td>
+                        <td>{{ objednavka.nazev }}</td>
+                        <td>{{ objednavka.uzivatel_id }}</td>
+                        <td>{{ objednavka.stav_objednavky }}</td>
+                    </tr>
+                    {% endfor %}
                 </table>
                 <h2>Volné objednávky</h2>
                 <table>
@@ -93,7 +93,7 @@
                         <td>{{ objednavka.stav_objednavky }}</td>
                     </tr>
                     {% endfor %}
-            </table>
+                </table>
                 <h2>Vyřízené objednávky</h2>
                 <table>
                     <tr>
@@ -110,8 +110,8 @@
                         <td>{{ objednavka.stav_objednavky }}</td>
                     </tr>
                     {% endfor %}
-            </table>
-        </div>
+                </table>
+            </div>
     </main>
 </body>
 
