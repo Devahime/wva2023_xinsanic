@@ -23,3 +23,23 @@ class ObjednavkaService:
         discount = min((total_orders // 10) * 5, 30)
 
         return discount
+
+    @staticmethod
+    def get_nevyrizene():
+        db = get_db()
+        nevyrizeno = db.execute("SELECT objednavka.objednavka_id, restaurace.nazev, uzivatel_id, stav_objednavky FROM objednavka JOIN objednavka_produkt USING(objednavka_id) JOIN produkt USING(produkt_id) JOIN restaurace USING (restaurace_id) WHERE stav_objednavky = 'nedoruceno'").fetchall()
+        return nevyrizeno
+
+    @staticmethod
+    def get_volne_objednavky():
+        db = get_db()
+        volne = db.execute(
+            "SELECT objednavka.objednavka_id, restaurace.nazev, uzivatel_id, stav_objednavky FROM objednavka JOIN objednavka_produkt USING(objednavka_id) JOIN produkt USING(produkt_id) JOIN restaurace USING (restaurace_id) WHERE stav_objednavky = 'volna'").fetchall()
+        return volne
+
+    @staticmethod
+    def get_vyrizene():
+        db = get_db()
+        vyrizene = db.execute(
+            "SELECT objednavka.objednavka_id, restaurace.nazev, uzivatel_id, stav_objednavky FROM objednavka JOIN objednavka_produkt USING(objednavka_id) JOIN produkt USING(produkt_id) JOIN restaurace USING (restaurace_id) WHERE stav_objednavky = 'doruceno'").fetchall()
+        return vyrizene

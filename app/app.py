@@ -29,5 +29,13 @@ def view_objednavka_page():
                            mnozstevni_sleva=mnozstevni_sleva
                            )
 
+@app.route('/vyber')
+def view_vyber_page():
+    nevyrizene = ObjednavkaService.get_nevyrizene()
+    volne = ObjednavkaService.get_volne_objednavky()
+    vyrizene = ObjednavkaService.get_vyrizene()
+    return render_template('/html/menu/vyberobjednavek.html',
+                           nevyrizene=nevyrizene, volne=volne, vyrizene=vyrizene)
+
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

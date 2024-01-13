@@ -5,8 +5,9 @@
 }
 
 body {
-    background: #eee;
+    background:#eee;
     font-family: Arial, Helvetica, sans-serif
+    
 }
 
 header,
@@ -51,7 +52,7 @@ header {
     display: flex;
     align-items: center;
     margin: 15px;
-
+    
 }
 
 #header_buttons .column {
@@ -88,6 +89,7 @@ header {
 #categories a:hover {
     color: #0056b3;
 }
+
 
 
 nav {
@@ -155,7 +157,6 @@ nav a:hover {
 
 .right-section form {
     display: grid;
-    grid-template-columns: 1fr 1fr;
     gap: 10px;
 }
 
@@ -167,69 +168,22 @@ label {
 }
 
 input {
-    width: 100%;
     padding: 8px;
     border: 1px solid #3498db;
     border-radius: 3px;
 }
 
-table {
+
+#jmeno,
+#karta {
     width: 100%;
-    margin-top: 20px;
-    border-collapse: collapse;
 }
 
-th,
-td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: center;
-}
-
-th {
-    background-color: #2980b9;
-    color: white;
-    font-weight: bold;
-}
-
-.frame {
-    display: flex;
-    border-radius: 5px;
-    padding: 5px;
-    background-color: #fff;
+#platnost,
+#cvc {
     width: 50%;
-    height: auto;
-    margin: 20px auto 0px;
 }
 
-.inner-frame {
-    width: 20%;
-    height: auto;
-    background-color: #2980b9;
-    border-radius: 5px;
-    margin-right: 10px;
-}
-
-.description-frame{
-    height: auto;
-    border-radius: 5px;
-    margin-right: 10px;
-    
-}
-
-.inner-frame .value {
-    font-weight: bold;
-    display: block;
-    padding: 5px;
-    text-align: center;
-}
-
-.description-frame .description{
-    font-weight: bold;
-    display: block;
-    padding: 5px;
-    color: #000;
-}
 
 @media (max-width: 900px) {
     #header_buttons button {
@@ -247,7 +201,7 @@ th {
         margin-left: 10px;
     }
 
-    #header_buttons .column {
+    #header_buttons .column{
         margin: 0px;
     }
 
@@ -266,10 +220,10 @@ th {
     header,
     main {
         width: 100%;
-        min-width: auto;
+        min-width:auto;
     }
 
     #cards-container {
-        justify-content: center;
+    justify-content: center;
     }
 }
