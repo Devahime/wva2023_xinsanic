@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../../static/css/objednavky.css" type="text/css">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <title>Objednavky</title>
+</head>
+
+<body>
+
+    <header>
+        <div id="logo">
+            <img src="../images/logo.png" alt="Logo společnosti" width="64" height="64">
+        </div>
+        <div id="header_buttons">
+            <button>
+                <div class="column">
+                    <span class="button-text">Napiste nam</span>
+                </div>
+                <div class="column">
+                    <span class="material-symbols-outlined">mail</span>
+                </div>
+            </button>
+            <button>
+                <div class="column">
+                    <span class="button-text">JMENO
+                        UZIVATELE</span><!--vlozit odkaz na osobniprofil.html, pokus je prihlasen-->
+                </div>
+                <div class="column">
+                    <span class="material-symbols-outlined">
+                        settings
+                    </span>
+                </div>
+            </button>
+        </div>
+    </header>
+    <main>
+        <div id="categories">
+            <a href="/html/kategorie/ceska.html">Česká kuchyně</a>
+            <a href="/html/kategorie/americka.html">Americká kuchyně</a>
+            <a href="/html/kategorie/asijska.html">Asijská kuchyně</a>
+            <a href="/html/kategorie/vegetarianska.html">Vegetariánská kuchyně</a>
+            <a href="/html/kategorie/streetfood.html">Streetfood</a>
+            <a href="/html/kategorie/turecka.html">Turecká kuchyně</a>
+        </div>
+        <div class="container">
+            <div class="left-section">
+                <nav>
+                    <a href="#">Osobní údaje</a>
+                    <a href="#">Objednávky</a>
+                    <a href="#">Platební údaje</a>
+                    <a href="#">Seznam objednvávek</a>
+                    <a href="#">Statistika</a>
+                </nav>
+            </div>
+
+            <div class="right-section">
+                <h2>Objednávky</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Cena</th>
+                            <th>Datum Vytvoření</th>
+                            <th>Stav objednávky</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for objednavka in objednavky %}
+                        <tr>
+                            <td>{{ objednavka.cena }}</td>
+                            <td>{{ objednavka.vytvoreni }}</td>
+                            <td>{{ objednavka.stav_objednavky }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <div class="frame">
+                    <div class="inner-frame">
+                        <span class = "value">{{ pocet_objednavek }}</span>
+                    </div>
+                    <div class="description-frame">
+                        <span class = "description">Počet objednávek</span>
+                    </div>
+                </div>
+                
+                <div class="frame">
+                    <div class="inner-frame">
+                        <span class = "value">{{ mnozstevni_sleva }} %</span>
+                    </div>
+                    <div class="description-frame">
+                        <span class = "description">Množstevní sleva</span>
+                    </div>
+                </div>
+        </div>
+    </main>
+</body>
+
+</html>
