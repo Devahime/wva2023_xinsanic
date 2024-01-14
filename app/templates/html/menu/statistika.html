@@ -105,15 +105,21 @@
                 <h2>Všechny objednávky</h2>
                 <table>
                         <tr>
+                            <th>ID objednavky</th>
+                            <th>Restaurace</th>
+                            <th>ID uzivatel</th>
+                            <th>ID kuryra</th>
+                            <th>Stav objednavky</th>
                             <th>Cena</th>
-                            <th>Datum Vytvoření</th>
-                            <th>Stav objednávky</th>
                         </tr>
                         {% for objednavka in objednavky %}
                         <tr>
-                            <td>{{ objednavka.cena }}</td>
-                            <td>{{ objednavka.vytvoreni }}</td>
+                            <td>{{ objednavka.objednavka_id }}</td>
+                            <td>{{ objednavka.nazev }}</td>
+                            <td>{{ objednavka.uzivatel }}</td>
+                            <td>{{ objednavka.kuryr }}</td>
                             <td>{{ objednavka.stav_objednavky }}</td>
+                            <td>{{ objednavka.cena }}</td>
                         </tr>
                         {% endfor %}
                 </table>

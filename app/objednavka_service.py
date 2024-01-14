@@ -43,3 +43,9 @@ class ObjednavkaService:
         vyrizene = db.execute(
             "SELECT objednavka.objednavka_id, restaurace.nazev, uzivatel_id, stav_objednavky FROM objednavka JOIN objednavka_produkt USING(objednavka_id) JOIN produkt USING(produkt_id) JOIN restaurace USING (restaurace_id) WHERE stav_objednavky = 'doruceno'").fetchall()
         return vyrizene
+
+    @staticmethod
+    def get_statistika():
+        db = get_db()
+        statistika = db.execute("SELECT  DISTINCT objednavka.objednavka_id, restaurace.nazev, u.user_id AS uzivatel, k.user_id AS kuryr, objednavka.stav_objednavky, cesta.cena FROM objednavka JOIN uzivatel u ON objednavka.uzivatel_id=u.user_id JOIN cesta ON objednavka.objednavka_id = cesta.objednavka_id JOIN uzivatel k ON cesta.user_id = k.user_id JOIN uzivatel JOIN objednavka_produkt USING(objednavka_id)JOIN produkt USING(produkt_id)JOIN restaurace USING(restaurace_id)").fetchall()
+        return statistika

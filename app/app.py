@@ -40,7 +40,7 @@ def view_vyber_page():
 @app.route('/statistika')
 def view_vyber_statistika():
     pocet_objednavek = ObjednavkaService.get_pocet()
-    objednavky = ObjednavkaService.get_all()
+    objednavky = ObjednavkaService.get_statistika()
     return render_template('/html/menu/statistika.html',
                            objednavky=objednavky,
                            pocet_objednavek = pocet_objednavek
