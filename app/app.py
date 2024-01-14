@@ -4,6 +4,7 @@ from database import database
 
 from restaurace_service import RestauraceService
 from objednavka_service import ObjednavkaService
+from uzivatele_service import UzivateleService
 
 app = Flask(__name__, static_folder='static', static_url_path='/static')
 
@@ -38,7 +39,7 @@ def view_vyber_page():
                            nevyrizene=nevyrizene, volne=volne, vyrizene=vyrizene)
 
 @app.route('/statistika')
-def view_vyber_statistika():
+def view_statistika_page():
     pocet_objednavek = ObjednavkaService.get_pocet()
     objednavky = ObjednavkaService.get_statistika()
     return render_template('/html/menu/statistika.html',
@@ -46,6 +47,12 @@ def view_vyber_statistika():
                            pocet_objednavek = pocet_objednavek
                            )
 
+@app.route('/uzivatele')
+def view_prehled_uzivatelu_page():
+    uzivatele = UzivateleService.get_role_uzivatelu()
+    return render_template('/html/menu/uzivatele.html',
+                           uzivatele=uzivatele
+                           )
 
 
 if __name__ == '__main__':
