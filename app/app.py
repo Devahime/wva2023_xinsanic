@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request
+import time
+from flask import Flask, make_response, redirect, render_template, request
 
 from database import database
 
@@ -75,6 +76,79 @@ def view_produkty_page():
                             restaurace = restaurace
                             )
 
+@app.get("/registrace")
+def view_registrace():
+    return render_template('/html/menu/registrace.html')
+
+@app.post("/registrace")
+def action_registrace():
+
+    # TODO: Přidat ostatní data z formuláře pro registraci
+    data = request.form.to_dict()
+    
+    if 'name' not in data or 'surname' not in data:
+        return render_template('/html/menu/registrace.html', error='Invalid data.')
+    
+    if UzivateleService.get_uzivatel_by_phone(data['telefon']) == None:
+        return render_template('/html/menu/registrace.html', error='User with this phone already exists.')
+
+    # Zahashovat heslo
+    data['heslo'] = hash(data['heslo'])
+
+    user = UzivateleService.create_uzivatel(data)
+
+    print(f'created user {user["user_id"]}')
+
+    return render_template('/html/menu/prihlaseni.html')
+
+@app.get("/prihlaseni")
+def view_prihlaseni():
+    return render_template('/html/menu/prihlaseni.html')
+
+@app.post("/prihlaseni")
+def action_prihlaseni():
+
+    data = request.form.to_dict()
+    
+    if not data['telefon']:
+        return render_template('/html/menu/prihlaseni.html', error='Nezadali jste tel. cislo.')
+
+    if not data['heslo']:
+        return render_template('/html/menu/prihlaseni.html', error='Nezadali jste heslo')
+
+    user = UzivateleService.get_uzivatel_by_phone(data['telefon'])
+
+    # TODO: Kontrolovat heslo uzivatele
+    # TODO: Pouzivat Timing attack safe porovnani
+    # TODO: Pouzivat lepsi hashovani
+    if user == None or hash(data['heslo']) != data['heslo']:
+        return render_template('/html/menu/prihlaseni.html', error='Špatné údaje')
+
+    response = make_response(redirect('/'))
+    response.set_cookie('connect.sid', str(user["user_id"]), expires=time.time() + 3600)
+    return response
+
+@app.get("/odhlaseni")
+def view_odhlaseni():
+    response = make_response(render_template('/html/menu/odhlaseni.html'))
+
+    response.set_cookie('connect.sid', '', expires=time.time() - 3600)
+
+    return response
+
+def start_session():
+    user = None
+    user_id = request.cookies.get('connect.sid')
+
+    print(f'Session user ID: {user_id}')
+
+    if user_id is not None:
+        # TODO: Najit uzivatele podle user_id pomoci UzivateleService
+        # user = UzivateleService.get_uzivatel(user_id)
+        # print(f'found user {user.id} from session')
+        pass
+
+    return user
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
