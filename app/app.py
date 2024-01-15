@@ -20,7 +20,8 @@ def index():
     kategorie_id = request.args.get("kategorie_id", None, int)
 
     restaurace = RestauraceService.get_all(kategorie_id)
-    return render_template('/html/index.html', restaurace=restaurace)
+    kategorie = RestauraceService.get_category_name(kategorie_id)
+    return render_template('/html/index.html', restaurace=restaurace, kategorie = kategorie)
 
 @app.route('/objednavky')
 def view_objednavka_page():

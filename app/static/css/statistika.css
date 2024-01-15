@@ -259,4 +259,25 @@ th {
     #cards-container {
         justify-content: center;
     }
+
+    .container {
+        flex-direction: column;
+    }
+
+    .right-section,
+    .left-section {
+        width: 100%;
+    }
+
+    .left-section nav {
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 10px;
+
+    }
+
+    nav a:hover {
+        width: auto;
+    }
 }

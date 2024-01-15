@@ -30,12 +30,12 @@
                 <div class="column">
                     <span class="button-text">Prihlaseni</span><!--vlozit odkaz na prihlaseni.html-->
                     <span class="button-subtext">Registrace</span><!--vlozit odkaz na registrace.html-->
-            </div>
-            <div class="column">
-                <span class="material-symbols-outlined">
-                    account_circle
-                </span>
-            </div>
+                </div>
+                <div class="column">
+                    <span class="material-symbols-outlined">
+                        account_circle
+                    </span>
+                </div>
             </button>
         </div>
     </header>
@@ -46,10 +46,13 @@
             <a href="{{url_for('index', kategorie_id=3)}}">Asijská kuchyně</a>
             <a href="{{url_for('index', kategorie_id=4)}}">Vegetariánská kuchyně</a>
             <a href="{{url_for('index', kategorie_id=5)}}">Streetfood</a>
-            <a href="{{url_for('index', kategorie_id=6)}}">Turecká kuchyně</a>
+            <a href="{{url_for('šindex', kategorie_id=6)}}">Turecká kuchyně</a>
         </div>
         <div id="restaurantTitle">
             <h2>Restaurace</h2>
+            {% if kategorie != None %}
+                <h2>{{kategorie.nazev}}</h2>
+            {% endif %}
         </div>
         <div class="searchbar">
             <input type="text" placeholder="Vyhledat restauraci">

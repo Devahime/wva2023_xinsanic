@@ -20,3 +20,11 @@ class RestauraceService:
             "SELECT * FROM restaurace JOIN restaurace_kategorie USING(restaurace_id) WHERE restaurace_kategorie.kategorie_id= ?",
             [kategorie_id]
         ).fetchall()
+
+
+    def get_category_name(kategorie_id: int):
+        db = get_db()
+        return db.execute(
+            "SELECT * FROM kategorie WHERE kategorie_id = ?",
+            [kategorie_id]
+        ).fetchone()
