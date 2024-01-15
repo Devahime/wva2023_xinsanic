@@ -16,7 +16,10 @@ database.init_app(app)
 @app.route('/')
 def index():
     #return '<a href="http://127.0.0.1:5000/html/index.html">Dovážková služba</a>'
-    restaurace = RestauraceService.get_all()
+
+    kategorie_id = request.args.get("kategorie_id", None, int)
+
+    restaurace = RestauraceService.get_all(kategorie_id)
     return render_template('/html/index.html', restaurace=restaurace)
 
 @app.route('/objednavky')
