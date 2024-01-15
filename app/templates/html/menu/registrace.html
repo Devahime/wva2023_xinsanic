@@ -8,7 +8,7 @@
 </head>
 <body>
 
-    <form action="#" method="post">
+    <form action="registrace" method="POST" enctype="multipart/form-data">
         <label for="jmeno">Jméno:</label>
         <input type="text" id="name" name="name" required>
 
@@ -18,23 +18,27 @@
         <label for="telefon">Telefonní číslo:</label>
         <input type="tel" id="telefon" name="telefon" required>
 
-        <label for="adresa">Adresa:</label>
+        <!-- <label for="adresa">Adresa:</label>
         <input type="text" id="adresa" name="adresa" required>
 
         <label for="mesto">Město:</label>
         <input type="text" id="mesto" name="mesto" required>
 
         <label for="psc">PSČ:</label>
-        <input type="text" id="psc" name="psc" required>
+        <input type="text" id="psc" name="psc" required> -->
 
-        <label for="heslo">Heslo:</label>
-        <input type="password" id="heslo" name="heslo" required>
+        <!-- <label for="heslo">Heslo:</label>
+        <input type="password" id="heslo" name="heslo" required> -->
 
-        <label for="hesloznovu">Heslo znovu:</label>
-        <input type="password" id="hesloznovu" name="hesloznovu" required>
+        <!-- <label for="hesloznovu">Heslo znovu:</label>
+        <input type="password" id="hesloznovu" name="hesloznovu" required> -->
 
         <button type="submit">Registrovat se</button>
     </form>
+
+    {% if error %}
+        <p style="color: red">{{error}}</p>
+    {% endif %}
 
 </body>
 </html>
