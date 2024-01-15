@@ -15,7 +15,9 @@
 
     <header>
         <div id="logo">
-            <img src="../images/logo.png" alt="Logo společnosti" width="64" height="64">
+            <a href="{{url_for('index')}}">
+                <img src="../images/logo.png" alt="Logo společnosti" width="64" height="64">
+            </a>
         </div>
         <div id="header_buttons">
             <button>
@@ -63,22 +65,22 @@
             <div class="right-section">
                 <h2>Prehled uzivatelu</h2>
                 <table>
-                        <tr>
-                            <th>ID uzivatele</th>
-                            <th>Prijmeni</th>
-                            <th>Jmeno</th>
-                            <th>Role</th>
-                        </tr>
-                        {% for uzivatel in uzivatele %}
-                        <tr>
-                            <td>{{ uzivatel.user_id }}</td>
-                            <td>{{ uzivatel.prijmeni }}</td>
-                            <td>{{ uzivatel.jmeno }}</td>
-                            <td>{{ uzivatel.nazev_role }}</td>
-                        </tr>
-                        {% endfor %}
+                    <tr>
+                        <th>ID uzivatele</th>
+                        <th>Prijmeni</th>
+                        <th>Jmeno</th>
+                        <th>Role</th>
+                    </tr>
+                    {% for uzivatel in uzivatele %}
+                    <tr>
+                        <td>{{ uzivatel.user_id }}</td>
+                        <td>{{ uzivatel.prijmeni }}</td>
+                        <td>{{ uzivatel.jmeno }}</td>
+                        <td>{{ uzivatel.nazev_role }}</td>
+                    </tr>
+                    {% endfor %}
                 </table>
-        </div>
+            </div>
     </main>
 </body>
 

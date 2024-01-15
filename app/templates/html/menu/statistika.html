@@ -15,7 +15,9 @@
 
     <header>
         <div id="logo">
-            <img src="../images/logo.png" alt="Logo společnosti" width="64" height="64">
+            <a href="{{url_for('index')}}">
+                <img src="../images/logo.png" alt="Logo společnosti" width="64" height="64">
+            </a>
         </div>
         <div id="header_buttons">
             <button>
@@ -64,67 +66,67 @@
                 <h2>Statistika</h2>
                 <div class="statistics">
                     <div class="description-frame">
-                        <span class = "description">Počet objednávek</span>
+                        <span class="description">Počet objednávek</span>
                     </div>
                     <div class="inner-frame">
-                        <span class = "value">{{ pocet_objednavek }}</span>
+                        <span class="value">{{ pocet_objednavek }}</span>
                     </div>
                 </div>
                 <div class="statistics">
                     <div class="description-frame">
-                        <span class = "description">Provize z prostredkovani objednavek</span>
+                        <span class="description">Provize z prostredkovani objednavek</span>
                     </div>
                     <div class="inner-frame">
-                        <span class = "value">NaN</span>
+                        <span class="value">NaN</span>
                     </div>
                 </div>
                 <div class="statistics">
                     <div class="description-frame">
-                        <span class = "description">Zisk z dovozu</span>
+                        <span class="description">Zisk z dovozu</span>
                     </div>
                     <div class="inner-frame">
-                        <span class = "value">NaN</span>
+                        <span class="value">NaN</span>
                     </div>
                 </div>
                 <div class="statistics">
                     <div class="description-frame">
-                        <span class = "description">Zisk z prostredkovani objednavek</span>
+                        <span class="description">Zisk z prostredkovani objednavek</span>
                     </div>
                     <div class="inner-frame">
-                        <span class = "value">NaN</span>
+                        <span class="value">NaN</span>
                     </div>
                 </div>
                 <div class="statistics">
                     <div class="description-frame">
-                        <span class = "description">Celkovy zisk</span>
+                        <span class="description">Celkovy zisk</span>
                     </div>
                     <div class="inner-frame">
-                        <span class = "value">NaN</span>
+                        <span class="value">NaN</span>
                     </div>
                 </div>
                 <br>
                 <h2>Všechny objednávky</h2>
                 <table>
-                        <tr>
-                            <th>ID objednavky</th>
-                            <th>Restaurace</th>
-                            <th>ID uzivatel</th>
-                            <th>ID kuryra</th>
-                            <th>Stav objednavky</th>
-                            <th>Cena</th>
-                        </tr>
-                        {% for objednavka in objednavky %}
-                        <tr>
-                            <td>{{ objednavka.objednavka_id }}</td>
-                            <td>{{ objednavka.nazev }}</td>
-                            <td>{{ objednavka.uzivatel }}</td>
-                            <td>{{ objednavka.kuryr }}</td>
-                            <td>{{ objednavka.stav_objednavky }}</td>
-                            <td>{{ objednavka.cena }}</td>
-                        </tr>
-                        {% endfor %}
+                    <tr>
+                        <th>ID objednavky</th>
+                        <th>Restaurace</th>
+                        <th>ID uzivatel</th>
+                        <th>ID kuryra</th>
+                        <th>Stav objednavky</th>
+                        <th>Cena</th>
+                    </tr>
+                    {% for objednavka in objednavky %}
+                    <tr>
+                        <td>{{ objednavka.objednavka_id }}</td>
+                        <td>{{ objednavka.nazev }}</td>
+                        <td>{{ objednavka.uzivatel }}</td>
+                        <td>{{ objednavka.kuryr }}</td>
+                        <td>{{ objednavka.stav_objednavky }}</td>
+                        <td>{{ objednavka.cena }}</td>
+                    </tr>
+                    {% endfor %}
                 </table>
-        </div>
+            </div>
     </main>
 </body>
 

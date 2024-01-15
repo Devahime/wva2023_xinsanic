@@ -21,10 +21,18 @@ class RestauraceService:
             [kategorie_id]
         ).fetchall()
 
-
+    @staticmethod
     def get_category_name(kategorie_id: int):
         db = get_db()
         return db.execute(
             "SELECT * FROM kategorie WHERE kategorie_id = ?",
             [kategorie_id]
+        ).fetchone()
+
+    @staticmethod
+    def get_by_id(restaurace_id: int):
+        db = get_db()
+        return db.execute(
+            "SELECT * FROM restaurace WHERE restaurace_id = ?",
+            [restaurace_id]
         ).fetchone()

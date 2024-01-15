@@ -5,6 +5,7 @@ from database import database
 from restaurace_service import RestauraceService
 from objednavka_service import ObjednavkaService
 from uzivatele_service import UzivateleService
+from produkty_service import ProduktyService
 
 app = Flask(__name__, static_folder='static', static_url_path='/static')
 
@@ -21,7 +22,10 @@ def index():
 
     restaurace = RestauraceService.get_all(kategorie_id)
     kategorie = RestauraceService.get_category_name(kategorie_id)
-    return render_template('/html/index.html', restaurace=restaurace, kategorie = kategorie)
+    return render_template('/html/index.html',
+                           restaurace=restaurace,
+                           kategorie = kategorie
+                           )
 
 @app.route('/objednavky')
 def view_objednavka_page():
@@ -40,7 +44,9 @@ def view_vyber_page():
     volne = ObjednavkaService.get_volne_objednavky()
     vyrizene = ObjednavkaService.get_vyrizene()
     return render_template('/html/menu/vyberobjednavek.html',
-                           nevyrizene=nevyrizene, volne=volne, vyrizene=vyrizene)
+                           nevyrizene=nevyrizene,
+                           volne=volne,
+                           vyrizene=vyrizene)
 
 @app.route('/statistika')
 def view_statistika_page():
@@ -57,6 +63,17 @@ def view_prehled_uzivatelu_page():
     return render_template('/html/menu/uzivatele.html',
                            uzivatele=uzivatele
                            )
+
+
+@app.route('/produkty')
+def view_produkty_page():
+    restaurace_id = request.args.get("restaurace_id", None, int)
+    restaurace = RestauraceService.get_by_id(restaurace_id)
+    produkty = ProduktyService.get_prudukty_restaurace(restaurace_id)
+    return  render_template('/html/produkty.html',
+                            produkty = produkty,
+                            restaurace = restaurace
+                            )
 
 
 if __name__ == '__main__':

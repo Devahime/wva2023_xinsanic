@@ -118,11 +118,6 @@ header {
     height: auto;
 }
 
-.card a {
-    text-decoration: none;
-    color: inherit;
-}
-
 
 @media (max-width: 900px) {
     #header_buttons button {
