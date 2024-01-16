@@ -2,10 +2,14 @@
 <html lang="cs">
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
-    <link rel="stylesheet" href="../../../static/css/napistenam.css" type="text/css">
+    <link rel="stylesheet" href="../../../static/css/odhlasseni.css" type="text/css">
+
+    <title>Odhlášení</title>
 </head>
 <body>
-    <p>Byl jste odhlášen.</p>
-    <a href="{{url_for('index')}}">Domů</a>
+    <div class="container">
+        <p class="message">Uživatel byl úspěšně odhlášen</p>
+        <a href="{{url_for('index')}}">Zpět na hlavní stránku</a>
+    </div>
 </body>
 </html>
