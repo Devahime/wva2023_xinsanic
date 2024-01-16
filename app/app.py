@@ -76,6 +76,16 @@ def view_produkty_page():
                             restaurace = restaurace
                             )
 
+@app.route('/objednat')
+def view_objednat_page():
+    restaurace_id = request.args.get("restaurace_id", None, int)
+    restaurace = RestauraceService.get_by_id(restaurace_id)
+    produkty = ProduktyService.get_prudukty_restaurace(restaurace_id)
+    return render_template('/html/objednani.html',
+                           produkty = produkty,
+                           restaurace = restaurace
+                           )
+
 @app.get("/registrace")
 def view_registrace():
     return render_template('/html/menu/registrace.html')

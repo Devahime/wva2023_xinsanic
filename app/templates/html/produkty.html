@@ -64,10 +64,12 @@
             {% for produkt in produkty %}
             <div class="card">
                 <img src="restaurant_image.jpg">
-                <div class="card-description">
-                    <h3>{{ produkt.nazev }}</h3>
-                </div>
+                <a href="{{url_for('view_objednat_page', restaurace_id=restaurace.restaurace_id)}}">
+                    <div class="card-description">
+                        <h3>{{ produkt.nazev }}</h3>
+                    </div>
             </div>
+            </a>
             {% endfor %}
         </div>
 

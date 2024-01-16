@@ -97,31 +97,60 @@ header {
     margin: 20px 0;
 }
 
-#cards-container {
-    width: auto;
-    display: flex;
-    flex-wrap:wrap;
-    margin: 20px 0;
+.objednani{
+    margin: 0px auto;
+    margin-top: 30px;
 }
 
-.card {
+.objednani th {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.objednani th,
+.objednani td {
+    border-radius: 10px;
+    padding: 10px;
     border: 1px solid #ddd;
-    border-radius: 8px;
-    width: 30%;
-    min-width: 250px;
-    margin: 20px;
-    padding: 15px; 
 }
 
-.card img {
-    width: 100%;
-    height: auto;
+.objednani tr:hover {
+    background-color: #f5f5f5;
 }
 
-.card a {
-    text-decoration: none;
-    color: inherit;
+.quantity-input {
+    display: flex;
+    align-items: center;
 }
+
+.quantity-btn {
+    border: 1px solid #ddd;
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin: 0 5px;
+    text-align: center;
+}
+
+.quantity-value {
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.order-btn {
+    display: flex;
+    margin: 20px auto;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+.order-btn:hover {
+    background-color: #0056b3;
+}
+
 
 @media (max-width: 900px) {
     #header_buttons button {
@@ -161,7 +190,4 @@ header {
         min-width:auto;
     }
 
-    #cards-container {
-    justify-content: center;
-    }
 }
