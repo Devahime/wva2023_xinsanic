@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../../static/css/objednavky.css" type="text/css">
+    <link rel="stylesheet" href="../../../static/css/uzivatele.css" type="text/css">
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <title>Uzivatele</title>
@@ -50,6 +50,7 @@
             <a href="/html/kategorie/streetfood.html">Streetfood</a>
             <a href="/html/kategorie/turecka.html">Turecká kuchyně</a>
         </div>
+        <form method="POST" action="{{ url_for('update_role') }}">
         <div class="container">
             <div class="left-section">
                 <nav>
@@ -64,23 +65,35 @@
 
             <div class="right-section">
                 <h2>Prehled uzivatelu</h2>
-                <table>
-                    <tr>
-                        <th>ID uzivatele</th>
-                        <th>Prijmeni</th>
-                        <th>Jmeno</th>
-                        <th>Role</th>
-                    </tr>
-                    {% for uzivatel in uzivatele %}
-                    <tr>
-                        <td>{{ uzivatel.user_id }}</td>
-                        <td>{{ uzivatel.prijmeni }}</td>
-                        <td>{{ uzivatel.jmeno }}</td>
-                        <td>{{ uzivatel.nazev_role }}</td>
-                    </tr>
-                    {% endfor %}
-                </table>
+                    <table>
+                        <tr>
+                            <th>ID uzivatele</th>
+                            <th>Prijmeni</th>
+                            <th>Jmeno</th>
+                            <th>Role</th>
+                            <th>Upravit</th>
+                        </tr>
+                        {% for uzivatel in uzivatele %}
+                        <tr>
+                            <td>{{ uzivatel.user_id }}</td>
+                            <td>{{ uzivatel.prijmeni }}</td>
+                            <td>{{ uzivatel.jmeno }}</td>
+                            <td>
+                                <select name="role_select">
+                                    <option value="" {% if not uzivatel.nazev_role %}selected{% endif %}>Vyberte roli</option>
+                                    {% for prvek in role %}
+                                    <option value="{{ prvek.role_id }}" {% if prvek.nazev==uzivatel.nazev_role %}selected{% endif %}>{{ prvek.nazev }}</option>
+                                    {% endfor %}
+                                </select>
+                            </td>
+                            <td>
+                                <button type="submit" name="submit_button" value="{{ uzivatel.user_id }}">Uložit</button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </table>
             </div>
+        </form>
     </main>
 </body>
 

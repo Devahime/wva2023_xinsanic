@@ -61,8 +61,10 @@ def view_statistika_page():
 @app.route('/uzivatele')
 def view_prehled_uzivatelu_page():
     uzivatele = UzivateleService.get_role_uzivatelu()
+    role = UzivateleService.get_role()
     return render_template('/html/menu/uzivatele.html',
-                           uzivatele=uzivatele
+                           uzivatele=uzivatele,
+                           role = role
                            )
 
 
@@ -159,6 +161,13 @@ def start_session():
         pass
 
     return user
+
+@app.route('/update_role', methods=['POST'])
+def update_role():
+    user_id = request.form.get('submit_button', None, int)
+    new_role_id = request.form.get('role_select', None, int)
+    UzivateleService.update_role_uzivatele(user_id, new_role_id)
+    return redirect('/uzivatele')
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

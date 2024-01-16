@@ -52,35 +52,12 @@
         <div id="restaurantTitle">
             <h2>Restaurace</h2>
         </div>
-        <div class="searchbar">
-            <input type="text" placeholder="Vyhledat restauraci">
-        </div>
         <table class="objednani">
             <tr>
                 <th>Název jídla</th>
                 <th>Popis</th>
                 <th>Cena</th>
                 <th>Kategorie</th>
-            </tr>
-            <tr>
-                <td>Pizza</td>
-                <td>Klasická italská pizza s rajčatovým základem a sýrem</td>
-                <td>8.99</td>
-                <td class="quantity-input">
-                    <div class="quantity-btn" onclick="decreaseQuantity(this)">-</div>
-                    <div class="quantity-value" contenteditable="true">0</div>
-                    <div class="quantity-btn" onclick="increaseQuantity(this)">+</div>
-                </td>
-            </tr>
-            <tr>
-                <td>Cesar salát</td>
-                <td>Salát s kuřecím masem, krutony a parmezánem</td>
-                <td>6.49</td>
-                <td class="quantity-input">
-                    <div class="quantity-btn" onclick="decreaseQuantity(this)">-</div>
-                    <div class="quantity-value" contenteditable="true">0</div>
-                    <div class="quantity-btn" onclick="increaseQuantity(this)">+</div>
-                </td>
             </tr>
             {% for produkt in produkty %}
             <tr>

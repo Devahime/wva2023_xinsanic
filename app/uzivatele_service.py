@@ -12,9 +12,23 @@ class UzivateleService:
     def get_role_uzivatelu():
         db = get_db()
 
-        sql = "SELECT user_id, jmeno, prijmeni, r.nazev AS nazev_role FROM uzivatel JOIN role_uzivatele ru on uzivatel.user_id = ru.uzivatele_id JOIN role r on ru.role_id = r.role_id"
+        sql = "SELECT user_id, jmeno, prijmeni, r.nazev AS nazev_role FROM uzivatel LEFT JOIN role_uzivatele ru ON uzivatel.user_id = ru.uzivatele_id LEFT JOIN role r ON ru.role_id = r.role_id"
         return db.execute(sql).fetchall()
-    
+
+    @staticmethod
+    def get_role():
+        db = get_db()
+        sql = "SELECT * FROM role"
+        return db.execute(sql).fetchall()
+
+    @staticmethod
+    def update_role_uzivatele(user_id: int, new_role_id: int):
+        db = get_db()
+        sql = "UPDATE role_uzivatele SET role_id = ? WHERE uzivatele_id = ? "
+        db.execute(sql, (new_role_id, user_id))
+        db.commit()
+        return True
+
     @staticmethod
     def get_uzivatel_by_phone(phone: str):
         db = get_db()
