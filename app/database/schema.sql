@@ -26,6 +26,7 @@ create table restaurace
     telefon       TEXT
         unique,
     adresa        TEXT
+    uzivatel_id INTEGER references uzivatel
 );
 
 create table produkt

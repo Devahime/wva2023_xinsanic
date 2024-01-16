@@ -70,6 +70,7 @@
                         <th>Nazev restaurace</th>
                         <th>Zakaznik ID</th>
                         <th>Stav objednávky</th>
+                        <th>Potvrdit</th>
                     </tr>
                     {% for objednavka in nevyrizene %}
                     <tr>
@@ -77,6 +78,13 @@
                         <td>{{ objednavka.nazev }}</td>
                         <td>{{ objednavka.uzivatel_id }}</td>
                         <td>{{ objednavka.stav_objednavky }}</td>
+                        <form method="POST" action="{{ url_for('update_stav_objednavky') }}">
+                            <input type="hidden" name="objednavka_id" value="{{ objednavka.objednavka_id }}">
+                            <input type="hidden" name="novy_stav" value="doruceno">
+                            <td>
+                                <button type="submit" name="potvrdit_doruceni">Doruceno</button>
+                            </td>
+                        </form>
                     </tr>
                     {% endfor %}
                 </table>
@@ -87,6 +95,7 @@
                         <th>Nazev restaurace</th>
                         <th>Zakaznik ID</th>
                         <th>Stav objednávky</th>
+                        <th>Zabrat</th>
                     </tr>
                     {% for objednavka in volne %}
                     <tr>
@@ -94,6 +103,13 @@
                         <td>{{ objednavka.nazev }}</td>
                         <td>{{ objednavka.uzivatel_id }}</td>
                         <td>{{ objednavka.stav_objednavky }}</td>
+                        <form method="POST" action="{{ url_for('update_stav_objednavky') }}">
+                            <input type="hidden" name="objednavka_id" value="{{ objednavka.objednavka_id }}">
+                            <input type="hidden" name="novy_stav" value="nedoruceno">
+                            <td>
+                                <button type="submit" name="rezervace">Priradit</button>
+                            </td>
+                        </form>
                     </tr>
                     {% endfor %}
                 </table>

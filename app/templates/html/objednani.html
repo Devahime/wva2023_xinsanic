@@ -91,23 +91,6 @@
             }
         }
     </script>
-
-    <script>
-        function increaseQuantity(element) {
-            var quantityElement = element.parentNode.querySelector('.quantity-value');
-            var quantity = parseInt(quantityElement.innerText, 10);
-            quantityElement.innerText = quantity + 1;
-        }
-
-        function decreaseQuantity(element) {
-            var quantityElement = element.parentNode.querySelector('.quantity-value');
-            var quantity = parseInt(quantityElement.innerText, 10);
-            if (quantity > 0) {
-                quantityElement.innerText = quantity - 1;
-            }
-        }
-    </script>
-
 </body>
 
 </html>

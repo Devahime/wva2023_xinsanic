@@ -169,5 +169,13 @@ def update_role():
     UzivateleService.update_role_uzivatele(user_id, new_role_id)
     return redirect('/uzivatele')
 
+@app.route('/update_objednavky', methods=['POST'])
+def update_stav_objednavky():
+    objednavka_id = request.form.get('objednavka_id', None, int)
+    novy_stav = request.form.get('novy_stav', None, str)
+    ObjednavkaService.update_stav(objednavka_id, novy_stav)
+    return redirect('/vyber')
+
+
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

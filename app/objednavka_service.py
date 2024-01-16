@@ -27,21 +27,21 @@ class ObjednavkaService:
     @staticmethod
     def get_nevyrizene():
         db = get_db()
-        nevyrizeno = db.execute("SELECT DISTINCT objednavka.objednavka_id, restaurace.nazev, uzivatel_id, stav_objednavky FROM objednavka JOIN objednavka_produkt USING(objednavka_id) JOIN produkt USING(produkt_id) JOIN restaurace USING (restaurace_id) WHERE stav_objednavky = 'nedoruceno'").fetchall()
+        nevyrizeno = db.execute("SELECT DISTINCT objednavka.objednavka_id, restaurace.nazev, objednavka.uzivatel_id, stav_objednavky FROM objednavka JOIN objednavka_produkt USING(objednavka_id) JOIN produkt USING(produkt_id) JOIN restaurace USING (restaurace_id) WHERE stav_objednavky = 'nedoruceno'").fetchall()
         return nevyrizeno
 
     @staticmethod
     def get_volne_objednavky():
         db = get_db()
         volne = db.execute(
-            "SELECT DISTINCT objednavka.objednavka_id, restaurace.nazev, uzivatel_id, stav_objednavky FROM objednavka JOIN objednavka_produkt USING(objednavka_id) JOIN produkt USING(produkt_id) JOIN restaurace USING (restaurace_id) WHERE stav_objednavky = 'volna'").fetchall()
+            "SELECT DISTINCT objednavka.objednavka_id, restaurace.nazev, objednavka.uzivatel_id, stav_objednavky FROM objednavka JOIN objednavka_produkt USING(objednavka_id) JOIN produkt USING(produkt_id) JOIN restaurace USING (restaurace_id) WHERE stav_objednavky = 'volna'").fetchall()
         return volne
 
     @staticmethod
     def get_vyrizene():
         db = get_db()
         vyrizene = db.execute(
-            "SELECT DISTINCT objednavka.objednavka_id, restaurace.nazev, uzivatel_id, stav_objednavky FROM objednavka JOIN objednavka_produkt USING(objednavka_id) JOIN produkt USING(produkt_id) JOIN restaurace USING (restaurace_id) WHERE stav_objednavky = 'doruceno'").fetchall()
+            "SELECT DISTINCT objednavka.objednavka_id, restaurace.nazev, objednavka.uzivatel_id, stav_objednavky FROM objednavka JOIN objednavka_produkt USING(objednavka_id) JOIN produkt USING(produkt_id) JOIN restaurace USING (restaurace_id) WHERE stav_objednavky = 'doruceno'").fetchall()
         return vyrizene
 
     @staticmethod
@@ -49,3 +49,11 @@ class ObjednavkaService:
         db = get_db()
         statistika = db.execute("SELECT  DISTINCT objednavka.objednavka_id, restaurace.nazev, u.user_id AS uzivatel, k.user_id AS kuryr, objednavka.stav_objednavky, cesta.cena FROM objednavka JOIN uzivatel u ON objednavka.uzivatel_id=u.user_id JOIN cesta ON objednavka.objednavka_id = cesta.objednavka_id JOIN uzivatel k ON cesta.user_id = k.user_id JOIN uzivatel JOIN objednavka_produkt USING(objednavka_id)JOIN produkt USING(produkt_id)JOIN restaurace USING(restaurace_id)").fetchall()
         return statistika
+
+    @staticmethod
+    def update_stav(objednavka_id: int, novy_stav: str):
+        db = get_db()
+        sql = "UPDATE objednavka SET stav_objednavky = ? WHERE objednavka_id = ?"
+        db.execute(sql, (novy_stav, objednavka_id))
+        db.commit()
+        return True
