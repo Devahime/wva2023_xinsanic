@@ -100,7 +100,7 @@ def action_registrace():
         return render_template('/html/menu/registrace.html', error='Invalid data.')
     
     if UzivateleService.get_uzivatel_by_phone(data['telefon']) == None:
-        return render_template('/html/menu/registrace.html', error='User with this phone already exists.')
+        return render_template('/html/menu/registrace.html', error='Uživatel s tímto telefonním číslem je již zaregistrován.')
 
     # Zahashovat heslo
     data['heslo'] = hash(data['heslo'])
