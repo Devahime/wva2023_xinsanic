@@ -85,9 +85,9 @@ def view_produkty_page():
     show_limited = request.args.get("limited", False, bool)
 
     if show_unavailable:
-        produkty = ProduktyService.get_nedostupne_produkty(restaurace_id)
-    elif show_upcoming:
         produkty = ProduktyService.get_nadchazejici_produkty(restaurace_id)
+    elif show_upcoming:
+        produkty = ProduktyService.get_nedostupne_produkty(restaurace_id)
     elif show_limited:
         produkty = ProduktyService.get_limitovane_dostupne(restaurace_id)
     else:

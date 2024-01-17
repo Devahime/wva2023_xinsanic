@@ -25,6 +25,8 @@ create table restaurace
     nazev         TEXT,
     telefon       TEXT
         unique,
+
+	obrazekrestaurace	TEXT,
     adresa        TEXT
     uzivatel_id INTEGER references uzivatel
 );
@@ -38,6 +40,7 @@ create table produkt
     cena          INTEGER,
     dostupny_od   TEXT,
     dostupne_do   TEXT,
+	obrazek	TEXT,
     restaurace_id INTEGER
         references restaurace
 );

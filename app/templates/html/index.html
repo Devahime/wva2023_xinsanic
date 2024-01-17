@@ -16,7 +16,7 @@
 
     {% for restaurace in restaurace %}
     <div class="card">
-        <img src="restaurant_image.jpg">
+        <img src="{{ restaurace.obrazekrestaurace }}">
         <a href="{{url_for('view_produkty_page', restaurace_id=restaurace.restaurace_id)}}">
             <div class="card-description">
                 <h3>{{ restaurace.nazev }}</h3>

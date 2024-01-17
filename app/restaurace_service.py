@@ -10,7 +10,8 @@ class RestauraceService:
         if kategorie_id is not None:
             sql += " AND kategorie_id = ?"
             arguments.append(kategorie_id)
-
+        else:
+            sql = "SELECT DISTINCT nazev, restaurace_id, obrazekrestaurace FROM restaurace JOIN restaurace_kategorie USING(restaurace_id) WHERE 1=1"
         return db.execute(sql, arguments).fetchall()
 
     @staticmethod
