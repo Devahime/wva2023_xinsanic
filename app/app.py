@@ -1,4 +1,5 @@
 import time
+import bcrypt
 from flask import Flask, make_response, redirect, render_template, request
 
 from database import database
@@ -125,17 +126,27 @@ def view_registrace():
 @app.post("/registrace")
 def action_registrace():
 
-    # TODO: Přidat ostatní data z formuláře pro registraci
     data = request.form.to_dict()
     
     if 'name' not in data or 'surname' not in data:
         return render_template('/html/menu/registrace.html', error='Invalid data.')
-    
+
     if UzivateleService.get_uzivatel_by_phone(data['telefon']) == None:
         return render_template('/html/menu/registrace.html', error='Uživatel s tímto telefonním číslem je již zaregistrován.')
 
-    # Zahashovat heslo
-    data['heslo'] = hash(data['heslo'])
+    if 'adresa' not in data:
+        return render_template('/html/menu/registrace.html', error='Invalid data.')
+
+    if 'mesto' not in data:
+        return render_template('/html/menu/registrace.html', error='Invalid data.')
+
+    if 'psc' not in data:
+        return render_template('/html/menu/registrace.html', error='Invalid data.')
+
+    # snaha zahashovat heslo pres bcrypt
+    plain_password = data['heslo'].encode('utf-8')
+    hashed_password = bcrypt.hashpw(plain_password, bcrypt.gensalt())
+    data['heslo'] = hashed_password
 
     user = UzivateleService.create_uzivatel(data)
 
