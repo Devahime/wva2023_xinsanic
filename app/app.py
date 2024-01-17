@@ -28,6 +28,10 @@ def index():
                            kategorie = kategorie
                            )
 
+@app.route('/mujprofil')
+def view_profil_page():
+    return render_template('/html/menu/mujprofil.html')
+
 @app.route('/objednavky')
 def view_objednavka_page():
     objednavky = ObjednavkaService.get_all()
@@ -38,6 +42,10 @@ def view_objednavka_page():
                            pocet_objednavek=pocet_objednavek,
                            mnozstevni_sleva=mnozstevni_sleva
                            )
+
+@app.route('/platebniudaje')
+def view_udaje_page():
+    return render_template('/html/menu/platebniudaje.html')
 
 @app.route('/vyber')
 def view_vyber_page():
@@ -197,6 +205,7 @@ def update_stav_objednavky():
     novy_stav = request.form.get('novy_stav', None, str)
     ObjednavkaService.update_stav(objednavka_id, novy_stav)
     return redirect('/vyber')
+
 
 
 if __name__ == '__main__':

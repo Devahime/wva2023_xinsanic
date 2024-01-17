@@ -330,6 +330,10 @@ th {
     margin: 20px auto 0px;
 }
 
+.profile-link {
+    text-decoration: none;
+}
+
 #jmeno,
 #karta {
     width: 100%;
