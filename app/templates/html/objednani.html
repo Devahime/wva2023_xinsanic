@@ -50,8 +50,18 @@
             <a href="{{url_for('index', kategorie_id=6)}}">Turecká kuchyně</a>
         </div>
         <div id="restaurantTitle">
-            <h2>Restaurace</h2>
+            {% if restaurace == None %}
+            <h2>Zvolte si prvni restauraci</h2>
+            {% else %}
+            <h2>{{restaurace.nazev}}</h2>
+            {% endif %}
         </div>
+        {% if restaurace != None %}
+        <a href="?restaurace_id={{ restaurace.restaurace_id }}"
+            class="{{ 'active' if show_unavailable else '' }}">Zobrazit dostupne</a> |
+        <a href="?restaurace_id={{ restaurace.restaurace_id }}&limited=true"
+            class="{{ 'active' if show_limited else '' }}">Limited</a>
+        {% endif %}
         <table class="objednani">
             <tr>
                 <th>Název jídla</th>

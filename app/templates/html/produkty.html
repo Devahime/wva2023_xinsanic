@@ -57,9 +57,22 @@
             <h2>{{restaurace.nazev}}</h2>
             {% endif %}
         </div>
+
         <div class="searchbar">
             <input type="text" placeholder="Vyhledat restauraci">
         </div>
+        {% if restaurace != None %}
+        <br>
+        <a href="?restaurace_id={{ restaurace.restaurace_id }}"
+            class="{{ 'active' if show_unavailable else '' }}">Zobrazit dostupne</a> |
+        <a href="?restaurace_id={{ restaurace.restaurace_id }}&unavailable=true"
+            class="{{ 'active' if show_unavailable else '' }}">Unavailable</a> |
+        <a href="?restaurace_id={{ restaurace.restaurace_id }}&upcoming=true"
+            class="{{ 'active' if show_upcoming else '' }}">Upcoming</a> |
+        <a href="?restaurace_id={{ restaurace.restaurace_id }}&limited=true"
+            class="{{ 'active' if show_limited else '' }}">Limited</a>
+
+        {% endif %}
         <div id="cards-container">
             {% for produkt in produkty %}
             <div class="card">

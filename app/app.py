@@ -67,25 +67,47 @@ def view_prehled_uzivatelu_page():
                            role = role
                            )
 
-
 @app.route('/produkty')
 def view_produkty_page():
     restaurace_id = request.args.get("restaurace_id", None, int)
     restaurace = RestauraceService.get_by_id(restaurace_id)
-    produkty = ProduktyService.get_prudukty_restaurace(restaurace_id)
-    return  render_template('/html/produkty.html',
-                            produkty = produkty,
-                            restaurace = restaurace
-                            )
+
+    show_unavailable = request.args.get("unavailable", False, bool)
+    show_upcoming = request.args.get("upcoming", False, bool)
+    show_limited = request.args.get("limited", False, bool)
+
+    if show_unavailable:
+        produkty = ProduktyService.get_nedostupne_produkty(restaurace_id)
+    elif show_upcoming:
+        produkty = ProduktyService.get_nadchazejici_produkty(restaurace_id)
+    elif show_limited:
+        produkty = ProduktyService.get_limitovane_dostupne(restaurace_id)
+    else:
+        produkty = ProduktyService.get_zobrazit_dostupne(restaurace_id)
+
+    return render_template('/html/produkty.html',
+                           produkty=produkty,
+                           restaurace=restaurace,
+                           show_unavailable=show_unavailable,
+                           show_upcoming=show_upcoming,
+                           show_limited=show_limited
+                           )
 
 @app.route('/objednat')
 def view_objednat_page():
     restaurace_id = request.args.get("restaurace_id", None, int)
     restaurace = RestauraceService.get_by_id(restaurace_id)
-    produkty = ProduktyService.get_prudukty_restaurace(restaurace_id)
+    show_limited = request.args.get("limited", False, bool)
+
+    if show_limited:
+        produkty = ProduktyService.get_limitovane_dostupne(restaurace_id)
+    else:
+        produkty = ProduktyService.get_zobrazit_dostupne(restaurace_id)
+
     return render_template('/html/objednani.html',
                            produkty = produkty,
-                           restaurace = restaurace
+                           restaurace = restaurace,
+                           show_limited = show_limited
                            )
 
 @app.get("/registrace")
