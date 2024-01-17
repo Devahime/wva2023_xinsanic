@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../static/css/style.css" type="text/css">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <title>{% block title %}{% endblock %}</title>
+</head>
+
+<body>
+    <header>
+        <div id="logo">
+            <a href="{{url_for('index')}}">
+                <img src="../images/logo.png" alt="Logo společnosti" width="64" height="64">
+            </a>
+        </div>
+        <div id="header_buttons">
+            <button>
+                <div class="column">
+                    <span class="button-text">Napiste nam</span>
+                </div>
+                <div class="column">
+                    <span class="material-symbols-outlined">mail</span>
+                </div>
+            </button>
+            <button>
+                <div class="column">
+                    <span class="button-text">Prihlaseni</span><!--vlozit odkaz na prihlaseni.html-->
+                    <span class="button-subtext">Registrace</span><!--vlozit odkaz na registrace.html-->
+                </div>
+                <div class="column">
+                    <span class="material-symbols-outlined">
+                        account_circle
+                    </span>
+                </div>
+            </button>
+        </div>
+    </header>
+    <main>
+        {% block kategorie %}
+
+        {% endblock %}
+    
+    
+    
+        {% block main %}
+    
+        {% endblock %}
+    </main>
+</body>
+
+</html>

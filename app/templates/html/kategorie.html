@@ -1,0 +1,11 @@
+{% extends '/html/prihlaseny_header.html' %}
+{% block kategorie %}
+<div id="categories">
+    <a href="{{url_for('index', kategorie_id=1)}}">Česká kuchyně</a>
+    <a href="{{url_for('index', kategorie_id=2)}}">Americká kuchyně</a>
+    <a href="{{url_for('index', kategorie_id=3)}}">Asijská kuchyně</a>
+    <a href="{{url_for('index', kategorie_id=4)}}">Vegetariánská kuchyně</a>
+    <a href="{{url_for('index', kategorie_id=5)}}">Streetfood</a>
+    <a href="{{url_for('index', kategorie_id=6)}}">Turecká kuchyně</a>
+</div>
+{% endblock %}

@@ -1,78 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'html/kategorie.html' %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../static/css/style.css" type="text/css">
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <title>Kategorie</title>
-</head>
+{% block title %}Restaurace{% endblock %}
 
-<body>
-    <header>
-        <div id="logo">
-            <a href="{{url_for('index')}}">
-            <img src="../images/logo.png" alt="Logo společnosti" width="64" height="64">
-            </a>
-        </div>
-        <div id="header_buttons">
-            <button>
-                <div class="column">
-                    <span class="button-text">Napiste nam</span>
-                </div>
-                <div class="column">
-                    <span class="material-symbols-outlined">mail</span>
-                </div>
-            </button>
-            <button>
-                <div class="column">
-                    <span class="button-text">Prihlaseni</span><!--vlozit odkaz na prihlaseni.html-->
-                    <span class="button-subtext">Registrace</span><!--vlozit odkaz na registrace.html-->
-                </div>
-                <div class="column">
-                    <span class="material-symbols-outlined">
-                        account_circle
-                    </span>
-                </div>
-            </button>
-        </div>
-    </header>
-    <main>
-        <div id="categories">
-            <a href="{{url_for('index', kategorie_id=1)}}">Česká kuchyně</a>
-            <a href="{{url_for('index', kategorie_id=2)}}">Americká kuchyně</a>
-            <a href="{{url_for('index', kategorie_id=3)}}">Asijská kuchyně</a>
-            <a href="{{url_for('index', kategorie_id=4)}}">Vegetariánská kuchyně</a>
-            <a href="{{url_for('index', kategorie_id=5)}}">Streetfood</a>
-            <a href="{{url_for('index', kategorie_id=6)}}">Turecká kuchyně</a>
-        </div>
-        <div id="restaurantTitle">
-            <h2>Restaurace</h2>
-            {% if kategorie != None %}
-                <h2>{{kategorie.nazev}}</h2>
-            {% endif %}
-        </div>
-        <div class="searchbar">
-            <input type="text" placeholder="Vyhledat restauraci">
-        </div>
-        <div id="cards-container">
+{% block main %}
+<div id="restaurantTitle">
+    <h2>Restaurace</h2>
+    {% if kategorie != None %}
+    <h2>{{kategorie.nazev}}</h2>
+    {% endif %}
+</div>
+<div class="searchbar">
+    <input type="text" placeholder="Vyhledat restauraci">
+</div>
+<div id="cards-container">
 
-            {% for restaurace in restaurace %}
-            <div class="card">
-                <img src="restaurant_image.jpg">
-                <a  href="{{url_for('view_produkty_page', restaurace_id=restaurace.restaurace_id)}}">
-                <div class="card-description">
-                    <h3>{{ restaurace.nazev }}</h3>
-                </div>
-                </a>
+    {% for restaurace in restaurace %}
+    <div class="card">
+        <img src="restaurant_image.jpg">
+        <a href="{{url_for('view_produkty_page', restaurace_id=restaurace.restaurace_id)}}">
+            <div class="card-description">
+                <h3>{{ restaurace.nazev }}</h3>
             </div>
-            {% endfor %}
-        </div>
+        </a>
+    </div>
+    {% endfor %}
+</div>
 
-    </main>
-</body>
-
-</html>
+{% endblock %}

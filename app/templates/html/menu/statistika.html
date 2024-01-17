@@ -1,133 +1,84 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'html/kategorie.html' %}
+{% block title %}
+Statistika
+{% endblock %}
+{% block main %}
+<div class="container">
+    <div class="left-section">
+        <nav>
+            <a href="#">Osobní údaje</a>
+            <a href="#">Objednávky</a>
+            <a href="#">Platební údaje</a>
+            <a href="#">Výběr objednávek</a>
+            <a href="#">Statistika</a>
+            <a href="#">Uživatelé</a>
+        </nav>
+    </div>
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../../static/css/style.css" type="text/css">
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <title>Statistika</title>
-</head>
-
-<body>
-
-    <header>
-        <div id="logo">
-            <a href="{{url_for('index')}}">
-                <img src="../images/logo.png" alt="Logo společnosti" width="64" height="64">
-            </a>
-        </div>
-        <div id="header_buttons">
-            <button>
-                <div class="column">
-                    <span class="button-text">Napiste nam</span>
-                </div>
-                <div class="column">
-                    <span class="material-symbols-outlined">mail</span>
-                </div>
-            </button>
-            <button>
-                <div class="column">
-                    <span class="button-text">JMENO
-                        UZIVATELE</span><!--vlozit odkaz na osobniprofil.html, pokus je prihlasen-->
-                </div>
-                <div class="column">
-                    <span class="material-symbols-outlined">
-                        settings
-                    </span>
-                </div>
-            </button>
-        </div>
-    </header>
-    <main>
-        <div id="categories">
-            <a href="/html/kategorie/ceska.html">Česká kuchyně</a>
-            <a href="/html/kategorie/americka.html">Americká kuchyně</a>
-            <a href="/html/kategorie/asijska.html">Asijská kuchyně</a>
-            <a href="/html/kategorie/vegetarianska.html">Vegetariánská kuchyně</a>
-            <a href="/html/kategorie/streetfood.html">Streetfood</a>
-            <a href="/html/kategorie/turecka.html">Turecká kuchyně</a>
-        </div>
-        <div class="container">
-            <div class="left-section">
-                <nav>
-                    <a href="#">Osobní údaje</a>
-                    <a href="#">Objednávky</a>
-                    <a href="#">Platební údaje</a>
-                    <a href="#">Výběr objednvávek</a>
-                    <a href="#">Statistika</a>
-                    <a href="#">Uzivatele</a>
-                </nav>
+    <div class="right-section">
+        <h2>Statistika</h2>
+        <div class="statistics">
+            <div class="description-frame">
+                <span class="description">Počet objednávek</span>
             </div>
-
-            <div class="right-section">
-                <h2>Statistika</h2>
-                <div class="statistics">
-                    <div class="description-frame">
-                        <span class="description">Počet objednávek</span>
-                    </div>
-                    <div class="inner-frame">
-                        <span class="value">{{ pocet_objednavek }}</span>
-                    </div>
-                </div>
-                <div class="statistics">
-                    <div class="description-frame">
-                        <span class="description">Provize z prostredkovani objednavek</span>
-                    </div>
-                    <div class="inner-frame">
-                        <span class="value">NaN</span>
-                    </div>
-                </div>
-                <div class="statistics">
-                    <div class="description-frame">
-                        <span class="description">Zisk z dovozu</span>
-                    </div>
-                    <div class="inner-frame">
-                        <span class="value">NaN</span>
-                    </div>
-                </div>
-                <div class="statistics">
-                    <div class="description-frame">
-                        <span class="description">Zisk z prostredkovani objednavek</span>
-                    </div>
-                    <div class="inner-frame">
-                        <span class="value">NaN</span>
-                    </div>
-                </div>
-                <div class="statistics">
-                    <div class="description-frame">
-                        <span class="description">Celkovy zisk</span>
-                    </div>
-                    <div class="inner-frame">
-                        <span class="value">NaN</span>
-                    </div>
-                </div>
-                <br>
-                <h2>Všechny objednávky</h2>
-                <table>
-                    <tr>
-                        <th>ID objednavky</th>
-                        <th>Restaurace</th>
-                        <th>ID uzivatel</th>
-                        <th>ID kuryra</th>
-                        <th>Stav objednavky</th>
-                        <th>Cena</th>
-                    </tr>
-                    {% for objednavka in objednavky %}
-                    <tr>
-                        <td>{{ objednavka.objednavka_id }}</td>
-                        <td>{{ objednavka.nazev }}</td>
-                        <td>{{ objednavka.uzivatel }}</td>
-                        <td>{{ objednavka.kuryr }}</td>
-                        <td>{{ objednavka.stav_objednavky }}</td>
-                        <td>{{ objednavka.cena }}</td>
-                    </tr>
-                    {% endfor %}
-                </table>
+            <div class="inner-frame">
+                <span class="value">{{ pocet_objednavek }}</span>
             </div>
-    </main>
-</body>
-
-</html>
+        </div>
+        <div class="statistics">
+            <div class="description-frame">
+                <span class="description">Provize z prostredkovani objednavek</span>
+            </div>
+            <div class="inner-frame">
+                <span class="value">NaN</span>
+            </div>
+        </div>
+        <div class="statistics">
+            <div class="description-frame">
+                <span class="description">Zisk z dovozu</span>
+            </div>
+            <div class="inner-frame">
+                <span class="value">NaN</span>
+            </div>
+        </div>
+        <div class="statistics">
+            <div class="description-frame">
+                <span class="description">Zisk z prostredkovani objednavek</span>
+            </div>
+            <div class="inner-frame">
+                <span class="value">NaN</span>
+            </div>
+        </div>
+        <div class="statistics">
+            <div class="description-frame">
+                <span class="description">Celkovy zisk</span>
+            </div>
+            <div class="inner-frame">
+                <span class="value">NaN</span>
+            </div>
+        </div>
+        <br>
+        <h2>Všechny objednávky</h2>
+        <table>
+            <tr>
+                <th>ID objednavky</th>
+                <th>Restaurace</th>
+                <th>ID uzivatel</th>
+                <th>ID kuryra</th>
+                <th>Stav objednavky</th>
+                <th>Cena</th>
+            </tr>
+            {% for objednavka in objednavky %}
+            <tr>
+                <td>{{ objednavka.objednavka_id }}</td>
+                <td>{{ objednavka.nazev }}</td>
+                <td>{{ objednavka.uzivatel }}</td>
+                <td>{{ objednavka.kuryr }}</td>
+                <td>{{ objednavka.stav_objednavky }}</td>
+                <td>{{ objednavka.cena }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{% endblock %}

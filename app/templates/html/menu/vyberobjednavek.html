@@ -1,139 +1,90 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'html/kategorie.html' %}
+{% block title %}
+Statistika
+{% endblock %}
+{% block main %}
+<div class="container">
+    <div class="left-section">
+        <nav>
+            <a href="#">Osobní údaje</a>
+            <a href="#">Objednávky</a>
+            <a href="#">Platební údaje</a>
+            <a href="#">Výběr objednvávek</a>
+            <a href="#">Statistika</a>
+            <a href="#">Uzivatele</a>
+        </nav>
+    </div>
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../../static/css/style.css" type="text/css">
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <title>Objednavky</title>
-</head>
-
-<body>
-
-    <header>
-        <div id="logo">
-            <a href="{{url_for('index')}}">
-                <img src="../images/logo.png" alt="Logo společnosti" width="64" height="64">
-            </a>
-        </div>
-        <div id="header_buttons">
-            <button>
-                <div class="column">
-                    <span class="button-text">Napiste nam</span>
-                </div>
-                <div class="column">
-                    <span class="material-symbols-outlined">mail</span>
-                </div>
-            </button>
-            <button>
-                <div class="column">
-                    <span class="button-text">JMENO
-                        UZIVATELE</span><!--vlozit odkaz na osobniprofil.html, pokus je prihlasen-->
-                </div>
-                <div class="column">
-                    <span class="material-symbols-outlined">
-                        settings
-                    </span>
-                </div>
-            </button>
-        </div>
-    </header>
-    <main>
-        <div id="categories">
-            <a href="/html/kategorie/ceska.html">Česká kuchyně</a>
-            <a href="/html/kategorie/americka.html">Americká kuchyně</a>
-            <a href="/html/kategorie/asijska.html">Asijská kuchyně</a>
-            <a href="/html/kategorie/vegetarianska.html">Vegetariánská kuchyně</a>
-            <a href="/html/kategorie/streetfood.html">Streetfood</a>
-            <a href="/html/kategorie/turecka.html">Turecká kuchyně</a>
-        </div>
-        <div class="container">
-            <div class="left-section">
-                <nav>
-                    <a href="#">Osobní údaje</a>
-                    <a href="#">Objednávky</a>
-                    <a href="#">Platební údaje</a>
-                    <a href="#">Výběr objednvávek</a>
-                    <a href="#">Statistika</a>
-                    <a href="#">Uzivatele</a>
-                </nav>
-            </div>
-
-            <div class="right-section">
-                <h2>Neodkončené objednávky</h2>
-                <table>
-                    <tr>
-                        <th>ID objednavky</th>
-                        <th>Nazev restaurace</th>
-                        <th>Zakaznik ID</th>
-                        <th>Stav objednávky</th>
-                        <th>Potvrdit</th>
-                    </tr>
-                    {% for objednavka in nevyrizene %}
-                    <tr>
-                        <td>{{ objednavka.objednavka_id }}</td>
-                        <td>{{ objednavka.nazev }}</td>
-                        <td>{{ objednavka.uzivatel_id }}</td>
-                        <td>{{ objednavka.stav_objednavky }}</td>
-                        <form method="POST" action="{{ url_for('update_stav_objednavky') }}">
-                            <input type="hidden" name="objednavka_id" value="{{ objednavka.objednavka_id }}">
-                            <input type="hidden" name="novy_stav" value="doruceno">
-                            <td>
-                                <button type="submit" name="potvrdit_doruceni">Doruceno</button>
-                            </td>
-                        </form>
-                    </tr>
-                    {% endfor %}
-                </table>
-                <br>
-                <h2>Volné objednávky</h2>
-                <table>
-                    <tr>
-                        <th>ID objednavky</th>
-                        <th>Nazev restaurace</th>
-                        <th>Zakaznik ID</th>
-                        <th>Stav objednávky</th>
-                        <th>Zabrat</th>
-                    </tr>
-                    {% for objednavka in volne %}
-                    <tr>
-                        <td>{{ objednavka.objednavka_id }}</td>
-                        <td>{{ objednavka.nazev }}</td>
-                        <td>{{ objednavka.uzivatel_id }}</td>
-                        <td>{{ objednavka.stav_objednavky }}</td>
-                        <form method="POST" action="{{ url_for('update_stav_objednavky') }}">
-                            <input type="hidden" name="objednavka_id" value="{{ objednavka.objednavka_id }}">
-                            <input type="hidden" name="novy_stav" value="nedoruceno">
-                            <td>
-                                <button type="submit" name="rezervace">Priradit</button>
-                            </td>
-                        </form>
-                    </tr>
-                    {% endfor %}
-                </table>
-                <br>
-                <h2>Vyřízené objednávky</h2>
-                <table>
-                    <tr>
-                        <th>ID objednavky</th>
-                        <th>Nazev restaurace</th>
-                        <th>Zakaznik ID</th>
-                        <th>Stav objednávky</th>
-                    </tr>
-                    {% for objednavka in vyrizene %}
-                    <tr>
-                        <td>{{ objednavka.objednavka_id }}</td>
-                        <td>{{ objednavka.nazev }}</td>
-                        <td>{{ objednavka.uzivatel_id }}</td>
-                        <td>{{ objednavka.stav_objednavky }}</td>
-                    </tr>
-                    {% endfor %}
-                </table>
-            </div>
-    </main>
-</body>
-
-</html>
+    <div class="right-section">
+        <h2>Neodkončené objednávky</h2>
+        <table>
+            <tr>
+                <th>ID objednavky</th>
+                <th>Nazev restaurace</th>
+                <th>Zakaznik ID</th>
+                <th>Stav objednávky</th>
+                <th>Potvrdit</th>
+            </tr>
+            {% for objednavka in nevyrizene %}
+            <tr>
+                <td>{{ objednavka.objednavka_id }}</td>
+                <td>{{ objednavka.nazev }}</td>
+                <td>{{ objednavka.uzivatel_id }}</td>
+                <td>{{ objednavka.stav_objednavky }}</td>
+                <form method="POST" action="{{ url_for('update_stav_objednavky') }}">
+                    <input type="hidden" name="objednavka_id" value="{{ objednavka.objednavka_id }}">
+                    <input type="hidden" name="novy_stav" value="doruceno">
+                    <td>
+                        <button type="submit" name="potvrdit_doruceni">Doruceno</button>
+                    </td>
+                </form>
+            </tr>
+            {% endfor %}
+        </table>
+        <br>
+        <h2>Volné objednávky</h2>
+        <table>
+            <tr>
+                <th>ID objednavky</th>
+                <th>Nazev restaurace</th>
+                <th>Zakaznik ID</th>
+                <th>Stav objednávky</th>
+                <th>Zabrat</th>
+            </tr>
+            {% for objednavka in volne %}
+            <tr>
+                <td>{{ objednavka.objednavka_id }}</td>
+                <td>{{ objednavka.nazev }}</td>
+                <td>{{ objednavka.uzivatel_id }}</td>
+                <td>{{ objednavka.stav_objednavky }}</td>
+                <form method="POST" action="{{ url_for('update_stav_objednavky') }}">
+                    <input type="hidden" name="objednavka_id" value="{{ objednavka.objednavka_id }}">
+                    <input type="hidden" name="novy_stav" value="nedoruceno">
+                    <td>
+                        <button type="submit" name="rezervace">Priradit</button>
+                    </td>
+                </form>
+            </tr>
+            {% endfor %}
+        </table>
+        <br>
+        <h2>Vyřízené objednávky</h2>
+        <table>
+            <tr>
+                <th>ID objednavky</th>
+                <th>Nazev restaurace</th>
+                <th>Zakaznik ID</th>
+                <th>Stav objednávky</th>
+            </tr>
+            {% for objednavka in vyrizene %}
+            <tr>
+                <td>{{ objednavka.objednavka_id }}</td>
+                <td>{{ objednavka.nazev }}</td>
+                <td>{{ objednavka.uzivatel_id }}</td>
+                <td>{{ objednavka.stav_objednavky }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{% endblock %}
