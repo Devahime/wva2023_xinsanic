@@ -12,7 +12,7 @@ class UzivateleService:
     def get_role_uzivatelu():
         db = get_db()
 
-        sql = "SELECT user_id, jmeno, prijmeni, r.nazev AS nazev_role FROM uzivatel LEFT JOIN role_uzivatele ru ON uzivatel.user_id = ru.uzivatele_id LEFT JOIN role r ON ru.role_id = r.role_id"
+        sql = "SELECT DISTINCT user_id, jmeno, prijmeni, r.nazev AS nazev_role FROM uzivatel LEFT JOIN role_uzivatele ru ON uzivatel.user_id = ru.uzivatele_id LEFT JOIN role r ON ru.role_id = r.role_id"
         return db.execute(sql).fetchall()
 
     @staticmethod

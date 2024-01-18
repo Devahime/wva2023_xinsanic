@@ -65,3 +65,22 @@ class ProduktyService:
         db = get_db()
         sql = "SELECT produkt_id, cena FROM produkt"
         return db.execute(sql).fetchall()
+
+    @staticmethod
+    def vlozit_do_databaze(user_id, stav, product_quantities, total_cost):
+        db = get_db()
+
+        db.execute(
+            "INSERT INTO objednavka (cena, stav_objednavky, uzivatel_id) VALUES (?, ?, ?)",
+            (total_cost, stav, user_id)
+        )
+        db.commit()
+
+        order_id = db.execute("SELECT last_insert_rowid()").fetchone()[0]
+
+        for product_id, quantity in product_quantities.items():
+            db.execute(
+                "INSERT INTO objednavka_produkt (mnozstvi, objednavka_id, produkt_id) VALUES (?, ?, ?)",
+                (quantity, order_id, product_id)
+            )
+            db.commit()

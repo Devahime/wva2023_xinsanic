@@ -3,6 +3,7 @@
 Statistika
 {% endblock %}
 {% block main %}
+<form method="POST" action="{{ url_for('update_role') }}">
 <div class="container">
     <div class="left-section">
         <nav>
@@ -47,4 +48,5 @@ Statistika
         </table>
     </div>
 </div>
+</form>
 {% endblock %}

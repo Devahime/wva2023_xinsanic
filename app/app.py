@@ -60,11 +60,13 @@ def view_profil_page():
 
 @app.route('/objednavky')
 def view_objednavka_page():
-    objednavky = ObjednavkaService.get_all()
-    pocet_objednavek = ObjednavkaService.get_pocet()
-    mnozstevni_sleva = ObjednavkaService.get_mnozstevni_slevu()
 
     prihlaseny = get_logged_in_user()
+
+
+    pocet_objednavek = ObjednavkaService.get_moje_objednavky_pocet(int(request.cookies.get('connect.sid')))
+    objednavky = ObjednavkaService.get_moje_objednavky(int(request.cookies.get('connect.sid')))
+    mnozstevni_sleva = ObjednavkaService.get_moje_mnozstevni_slevu(int(request.cookies.get('connect.sid')))
 
     return render_template('/html/menu/objednavky.html',
                            objednavky=objednavky,
@@ -84,11 +86,12 @@ def view_udaje_page():
 
 @app.route('/vyber')
 def view_vyber_page():
-    nevyrizene = ObjednavkaService.get_nevyrizene()
     volne = ObjednavkaService.get_volne_objednavky()
-    vyrizene = ObjednavkaService.get_vyrizene()
 
     prihlaseny = get_logged_in_user()
+
+    vyrizene = ObjednavkaService.get_moje_vyrizene(int(request.cookies.get('connect.sid')))
+    nevyrizene = ObjednavkaService.get_moje_nevyrizene(int(request.cookies.get('connect.sid')))
 
     return render_template('/html/menu/vyberobjednavek.html',
                            nevyrizene=nevyrizene,
@@ -262,7 +265,10 @@ def update_role():
 def update_stav_objednavky():
     objednavka_id = request.form.get('objednavka_id', None, int)
     novy_stav = request.form.get('novy_stav', None, str)
+
     ObjednavkaService.update_stav(objednavka_id, novy_stav)
+    ObjednavkaService.create_or_update_cesta(objednavka_id, int(request.cookies.get('connect.sid')))
+
     return redirect('/vyber')
 
 
@@ -297,7 +303,9 @@ def objednat():
     print("Product Quantities:", product_quantities)
     print(f"Total Cost: {total_cost}")
 
-    return "Order submitted successfully!"
+    ProduktyService.vlozit_do_databaze(prihlaseny_user_id, stav, product_quantities, total_cost)
+
+    return redirect('/mujprofil')
 
 def calculate_total_cost(product_quantities):
     product_prices = {str(row['produkt_id']): float(row['cena']) for row in ProduktyService.funkce_na_soucet()}
