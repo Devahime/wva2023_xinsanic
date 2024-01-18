@@ -65,7 +65,7 @@ class UzivateleService:
         return { 'user_id': user[0], 'name': user[1], 'surname': user[2] }
 
     @staticmethod
-    def uzivatel_podle_id_smazu_pak(user_id):
+    def najit_uzivatele(user_id):
         db = get_db()
         sql = "SELECT * FROM uzivatel WHERE user_id = ?"
         return db.execute(sql, (user_id,)).fetchone()

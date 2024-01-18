@@ -20,6 +20,18 @@ database.init_app(app)
 def check_user_authentication():
     user_id_cookie = request.cookies.get('connect.sid')
     return user_id_cookie is not None
+
+def get_logged_in_user():
+    user_authenticated = check_user_authentication()
+
+    if user_authenticated:
+        user_id = request.cookies.get('connect.sid')
+        prihlaseny = UzivateleService.najit_uzivatele(int(user_id))
+        return prihlaseny
+    else:
+        return None
+
+
 @app.route('/')
 def index():
     #return '<a href="http://127.0.0.1:5000/html/index.html">Dovážková služba</a>'
@@ -29,65 +41,94 @@ def index():
     restaurace = RestauraceService.get_all(kategorie_id)
     kategorie = RestauraceService.get_category_name(kategorie_id)
 
-    user_authenticated = check_user_authentication()
+    prihlaseny = get_logged_in_user()
 
     return render_template('/html/index.html',
                            restaurace=restaurace,
                            kategorie = kategorie,
-                           user_authenticated=user_authenticated
+                           prihlaseny=prihlaseny
                            )
 
 @app.route('/mujprofil')
 def view_profil_page():
-    return render_template('/html/menu/mujprofil.html')
+
+    prihlaseny = get_logged_in_user()
+
+    return render_template('/html/menu/mujprofil.html',
+                           prihlaseny=prihlaseny
+                           )
 
 @app.route('/objednavky')
 def view_objednavka_page():
     objednavky = ObjednavkaService.get_all()
     pocet_objednavek = ObjednavkaService.get_pocet()
     mnozstevni_sleva = ObjednavkaService.get_mnozstevni_slevu()
+
+    prihlaseny = get_logged_in_user()
+
     return render_template('/html/menu/objednavky.html',
                            objednavky=objednavky,
                            pocet_objednavek=pocet_objednavek,
-                           mnozstevni_sleva=mnozstevni_sleva
+                           mnozstevni_sleva=mnozstevni_sleva,
+                           prihlaseny=prihlaseny
                            )
 
 @app.route('/platebniudaje')
 def view_udaje_page():
-    return render_template('/html/menu/platebniudaje.html')
+
+    prihlaseny = get_logged_in_user()
+
+    return render_template('/html/menu/platebniudaje.html',
+                           prihlaseny=prihlaseny
+                           )
 
 @app.route('/vyber')
 def view_vyber_page():
     nevyrizene = ObjednavkaService.get_nevyrizene()
     volne = ObjednavkaService.get_volne_objednavky()
     vyrizene = ObjednavkaService.get_vyrizene()
+
+    prihlaseny = get_logged_in_user()
+
     return render_template('/html/menu/vyberobjednavek.html',
                            nevyrizene=nevyrizene,
                            volne=volne,
-                           vyrizene=vyrizene)
+                           vyrizene=vyrizene,
+                           prihlaseny=prihlaseny
+                           )
 
 @app.route('/statistika')
 def view_statistika_page():
     pocet_objednavek = ObjednavkaService.get_pocet()
     objednavky = ObjednavkaService.get_statistika()
+
+    prihlaseny = get_logged_in_user()
+
     return render_template('/html/menu/statistika.html',
                            objednavky=objednavky,
-                           pocet_objednavek = pocet_objednavek
+                           pocet_objednavek = pocet_objednavek,
+                           prihlaseny=prihlaseny
                            )
 
 @app.route('/uzivatele')
 def view_prehled_uzivatelu_page():
     uzivatele = UzivateleService.get_role_uzivatelu()
     role = UzivateleService.get_role()
+
+    prihlaseny = get_logged_in_user()
+
     return render_template('/html/menu/uzivatele.html',
                            uzivatele=uzivatele,
-                           role = role
+                           role = role,
+                           prihlaseny=prihlaseny
                            )
 
 @app.route('/produkty')
 def view_produkty_page():
     restaurace_id = request.args.get("restaurace_id", None, int)
     restaurace = RestauraceService.get_by_id(restaurace_id)
+
+    prihlaseny = get_logged_in_user()
 
     show_unavailable = request.args.get("unavailable", False, bool)
     show_upcoming = request.args.get("upcoming", False, bool)
@@ -107,7 +148,8 @@ def view_produkty_page():
                            restaurace=restaurace,
                            show_unavailable=show_unavailable,
                            show_upcoming=show_upcoming,
-                           show_limited=show_limited
+                           show_limited=show_limited,
+                           prihlaseny=prihlaseny
                            )
 
 @app.route('/objednat')
@@ -115,6 +157,8 @@ def view_objednat_page():
     restaurace_id = request.args.get("restaurace_id", None, int)
     restaurace = RestauraceService.get_by_id(restaurace_id)
     show_limited = request.args.get("limited", False, bool)
+
+    prihlaseny = get_logged_in_user()
 
     if show_limited:
         produkty = ProduktyService.get_limitovane_dostupne(restaurace_id)
@@ -124,7 +168,8 @@ def view_objednat_page():
     return render_template('/html/objednani.html',
                            produkty = produkty,
                            restaurace = restaurace,
-                           show_limited = show_limited
+                           show_limited = show_limited,
+                           prihlaseny=prihlaseny
                            )
 
 @app.get("/registrace")
@@ -227,7 +272,7 @@ def protected_route():
 
     if user_id:
         # User is logged in, you can retrieve additional user information using the user_id
-        user = UzivateleService.uzivatel_podle_id_smazu_pak(int(user_id))
+        user = UzivateleService.najit_uzivatele(int(user_id))
         if user:
             # User is authenticated
             return f"Hello {user['jmeno']}, you are logged in!"
