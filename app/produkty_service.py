@@ -1,3 +1,5 @@
+import datetime
+
 from database.database import get_db
 
 class ProduktyService:
@@ -69,9 +71,9 @@ class ProduktyService:
     @staticmethod
     def vlozit_do_databaze(user_id, stav, product_quantities, total_cost):
         db = get_db()
-
+        current_date = datetime.datetime.now().strftime('%Y-%m-%d')
         db.execute(
-            "INSERT INTO objednavka (cena, stav_objednavky, uzivatel_id) VALUES (?, ?, ?)",
+            "INSERT INTO objednavka (cena, stav_objednavky, uzivatel_id, vytvoreni) VALUES (?, ?, ?, current_date)",
             (total_cost, stav, user_id)
         )
         db.commit()

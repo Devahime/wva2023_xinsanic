@@ -8,7 +8,6 @@ Statistika
         <nav>
             <a href="{{url_for('view_profil_page')}}">Osobní údaje</a>
             <a href="{{url_for('view_objednavka_page')}}">Objednávky</a>
-            <a href="{{url_for('view_udaje_page')}}">Platební údaje</a>
             <a href="{{url_for('view_vyber_page')}}">Výběr objednávek</a>
             <a href="{{url_for('view_statistika_page')}}">Statistika</a>
             <a href="{{url_for('view_prehled_uzivatelu_page')}}">Uživatelé</a>
@@ -27,34 +26,26 @@ Statistika
         </div>
         <div class="statistics">
             <div class="description-frame">
-                <span class="description">Provize z prostredkovani objednavek</span>
+                <span class="description">Provize z prostředkování objednávek</span>
             </div>
             <div class="inner-frame">
-                <span class="value">NaN</span>
+                <span class="value">{{ celkova_cena_proviz }}</span>
             </div>
         </div>
         <div class="statistics">
             <div class="description-frame">
-                <span class="description">Zisk z dovozu</span>
+                <span class="description">Zisk z dovozu objednávek</span>
             </div>
             <div class="inner-frame">
-                <span class="value">NaN</span>
+                <span class="value">{{ celkova_cena_cesty }}</span>
             </div>
         </div>
         <div class="statistics">
             <div class="description-frame">
-                <span class="description">Zisk z prostredkovani objednavek</span>
+                <span class="description">Celkový zisk</span>
             </div>
             <div class="inner-frame">
-                <span class="value">NaN</span>
-            </div>
-        </div>
-        <div class="statistics">
-            <div class="description-frame">
-                <span class="description">Celkovy zisk</span>
-            </div>
-            <div class="inner-frame">
-                <span class="value">NaN</span>
+                <span class="value">{{ celkovy_zisk }}</span>
             </div>
         </div>
         <br>
@@ -66,7 +57,8 @@ Statistika
                 <th>ID uzivatel</th>
                 <th>ID kuryra</th>
                 <th>Stav objednavky</th>
-                <th>Cena</th>
+                <th>Cena cesty</th>
+                <th>Provize</th>
             </tr>
             {% for objednavka in objednavky %}
             <tr>
@@ -76,6 +68,7 @@ Statistika
                 <td>{{ objednavka.kuryr }}</td>
                 <td>{{ objednavka.stav_objednavky }}</td>
                 <td>{{ objednavka.cena }}</td>
+                <td>{{ objednavka.provize }}</td>
             </tr>
             {% endfor %}
         </table>

@@ -47,7 +47,7 @@ class ObjednavkaService:
     @staticmethod
     def get_statistika():
         db = get_db()
-        statistika = db.execute("SELECT  DISTINCT objednavka.objednavka_id, restaurace.nazev, u.user_id AS uzivatel, k.user_id AS kuryr, objednavka.stav_objednavky, cesta.cena FROM objednavka LEFT JOIN uzivatel u ON objednavka.uzivatel_id=u.user_id LEFT JOIN cesta ON objednavka.objednavka_id = cesta.objednavka_id LEFT JOIN uzivatel k ON cesta.user_id = k.user_id LEFT JOIN uzivatel JOIN objednavka_produkt USING(objednavka_id)LEFT JOIN produkt USING(produkt_id)LEFT JOIN restaurace USING(restaurace_id)").fetchall()
+        statistika = db.execute("SELECT  DISTINCT objednavka.objednavka_id, restaurace.nazev, u.user_id AS uzivatel, k.user_id AS kuryr, objednavka.stav_objednavky, cesta.cena, objednavka.cena * 0.15 AS provize FROM objednavka LEFT JOIN uzivatel u ON objednavka.uzivatel_id=u.user_id LEFT JOIN cesta ON objednavka.objednavka_id = cesta.objednavka_id LEFT JOIN uzivatel k ON cesta.user_id = k.user_id LEFT JOIN uzivatel JOIN objednavka_produkt USING(objednavka_id)LEFT JOIN produkt USING(produkt_id)LEFT JOIN restaurace USING(restaurace_id)").fetchall()
         return statistika
 
     @staticmethod
@@ -106,7 +106,28 @@ class ObjednavkaService:
 
         total_cost = db.execute("SELECT cena FROM objednavka WHERE objednavka_id = ?", (objednavka_id,)).fetchone()[
             'cena']
+
         cesta_cost = 0.1 * total_cost
 
         db.execute("UPDATE cesta SET cena = ? WHERE cesta_id = ?", (cesta_cost, cesta_id))
         db.commit()
+
+    @staticmethod
+    def get_castky():
+        db = get_db()
+        statistika_query = """
+            SELECT
+                SUM(cesta.cena) AS celkova_cena_cesty,
+                SUM(objednavka.cena * 0.15) AS celkova_cena_proviz,
+                SUM(cesta.cena + objednavka.cena * 0.15) AS celkovy_zisk
+            FROM
+                objednavka
+                LEFT JOIN uzivatel u ON objednavka.uzivatel_id = u.user_id
+                LEFT JOIN cesta ON objednavka.objednavka_id = cesta.objednavka_id
+                LEFT JOIN uzivatel k ON cesta.user_id = k.user_id
+                LEFT JOIN uzivatel
+                LEFT JOIN objednavka_produkt USING (objednavka_id)
+                LEFT JOIN produkt USING (produkt_id)
+                LEFT JOIN restaurace USING (restaurace_id)
+        """
+        return db.execute(statistika_query).fetchone()

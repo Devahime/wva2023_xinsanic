@@ -107,10 +107,19 @@ def view_statistika_page():
 
     prihlaseny = get_logged_in_user()
 
+    vysledek = ObjednavkaService.get_castky()
+
+    celkova_cena_cesty = round(vysledek['celkova_cena_cesty'], 1)
+    celkova_cena_proviz = round(vysledek['celkova_cena_proviz'], 1)
+    celkovy_zisk = round(vysledek['celkovy_zisk'], 1)
+
     return render_template('/html/menu/statistika.html',
                            objednavky=objednavky,
                            pocet_objednavek = pocet_objednavek,
-                           prihlaseny=prihlaseny
+                           prihlaseny=prihlaseny,
+                             celkova_cena_cesty=celkova_cena_cesty,
+                        celkova_cena_proviz=celkova_cena_proviz,
+                        celkovy_zisk=celkovy_zisk,
                            )
 
 @app.route('/uzivatele')
