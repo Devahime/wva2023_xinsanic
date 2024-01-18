@@ -68,6 +68,12 @@ class UzivateleService:
     @staticmethod
     def najit_uzivatele(user_id):
         db = get_db()
-        sql = "SELECT * FROM uzivatel WHERE user_id = ?"
+        sql = "SELECT DISTINCT * FROM uzivatel JOIN role_uzivatele ru on uzivatel.user_id = ru.uzivatele_id JOIN role r on ru.role_id = r.role_id WHERE uzivatel.user_id = ?"
         return db.execute(sql, (user_id,)).fetchone()
 
+    @staticmethod
+    def get_role_by_id(user_id):
+        db = get_db()
+        sql = "SELECT DISTINCT r.nazev FROM role_uzivatele JOIN role r on r.role_id = role_uzivatele.role_id WHERE role_uzivatele.uzivatele_id = ?"
+        result = db.execute(sql, (user_id,)).fetchone()
+        return result[0]

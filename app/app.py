@@ -31,6 +31,9 @@ def get_logged_in_user():
     else:
         return None
 
+def get_role_prihlaseneho_uzivatele():
+    role = UzivateleService.get_role_by_id(int(request.cookies.get('connect.sid')))
+    return role
 
 @app.route('/')
 def index():
@@ -54,6 +57,11 @@ def view_profil_page():
 
     prihlaseny = get_logged_in_user()
 
+    if prihlaseny == None:
+        return render_template('/html/neprihlaseny_uzivatel.html',
+                               prihlaseny=prihlaseny
+                               )
+
     return render_template('/html/menu/mujprofil.html',
                            prihlaseny=prihlaseny
                            )
@@ -63,10 +71,16 @@ def view_objednavka_page():
 
     prihlaseny = get_logged_in_user()
 
+    if prihlaseny == None:
+        return render_template('/html/neprihlaseny_uzivatel.html',
+                               prihlaseny=prihlaseny
+                               )
 
     pocet_objednavek = ObjednavkaService.get_moje_objednavky_pocet(int(request.cookies.get('connect.sid')))
     objednavky = ObjednavkaService.get_moje_objednavky(int(request.cookies.get('connect.sid')))
     mnozstevni_sleva = ObjednavkaService.get_moje_mnozstevni_slevu(int(request.cookies.get('connect.sid')))
+
+
 
     return render_template('/html/menu/objednavky.html',
                            objednavky=objednavky,
@@ -75,14 +89,16 @@ def view_objednavka_page():
                            prihlaseny=prihlaseny
                            )
 
-@app.route('/platebniudaje')
-def view_udaje_page():
+#@app.route('/platebniudaje')
+#def view_udaje_page():
 
-    prihlaseny = get_logged_in_user()
+    #prihlaseny = get_logged_in_user()
 
-    return render_template('/html/menu/platebniudaje.html',
-                           prihlaseny=prihlaseny
-                           )
+    #return render_template('/html/menu/platebniudaje.html',
+                           #prihlaseny=prihlaseny
+                           #)
+
+
 
 @app.route('/vyber')
 def view_vyber_page():
@@ -90,8 +106,19 @@ def view_vyber_page():
 
     prihlaseny = get_logged_in_user()
 
+    if prihlaseny == None:
+        return render_template('/html/neprihlaseny_uzivatel.html',
+                               prihlaseny=prihlaseny
+                               )
+    if get_role_prihlaseneho_uzivatele() != 'kuryr' or get_role_prihlaseneho_uzivatele() != 'admin':
+        return render_template('/html/neopraveneny_pristup.html',
+                               prihlaseny=prihlaseny
+                               )
+
     vyrizene = ObjednavkaService.get_moje_vyrizene(int(request.cookies.get('connect.sid')))
     nevyrizene = ObjednavkaService.get_moje_nevyrizene(int(request.cookies.get('connect.sid')))
+
+
 
     return render_template('/html/menu/vyberobjednavek.html',
                            nevyrizene=nevyrizene,
@@ -107,11 +134,23 @@ def view_statistika_page():
 
     prihlaseny = get_logged_in_user()
 
+    if prihlaseny == None:
+        return render_template('/html/neprihlaseny_uzivatel.html',
+                               prihlaseny=prihlaseny
+                               )
+
+    if get_role_prihlaseneho_uzivatele() != 'admin':
+        return render_template('/html/neopraveneny_pristup.html',
+                               prihlaseny=prihlaseny
+                               )
+
     vysledek = ObjednavkaService.get_castky()
 
     celkova_cena_cesty = round(vysledek['celkova_cena_cesty'], 1)
     celkova_cena_proviz = round(vysledek['celkova_cena_proviz'], 1)
     celkovy_zisk = round(vysledek['celkovy_zisk'], 1)
+
+
 
     return render_template('/html/menu/statistika.html',
                            objednavky=objednavky,
@@ -129,6 +168,16 @@ def view_prehled_uzivatelu_page():
 
     prihlaseny = get_logged_in_user()
 
+    if get_role_prihlaseneho_uzivatele() != 'admin':
+        return render_template('/html/neopraveneny_pristup.html',
+                               prihlaseny=prihlaseny
+                               )
+
+    if prihlaseny == None:
+        return render_template('/html/neprihlaseny_uzivatel.html',
+                               prihlaseny=prihlaseny
+                               )
+
     return render_template('/html/menu/uzivatele.html',
                            uzivatele=uzivatele,
                            role = role,
@@ -145,6 +194,11 @@ def view_produkty_page():
     show_unavailable = request.args.get("unavailable", False, bool)
     show_upcoming = request.args.get("upcoming", False, bool)
     show_limited = request.args.get("limited", False, bool)
+
+    if prihlaseny == None:
+        return render_template('/html/neprihlaseny_uzivatel.html',
+                               prihlaseny=prihlaseny
+                               )
 
     if show_unavailable:
             produkty = ProduktyService.get_nadchazejici_produkty(restaurace_id)
@@ -178,12 +232,20 @@ def view_objednat_page():
     else:
         produkty = ProduktyService.get_zobrazit_dostupne(restaurace_id)
 
+
+
+    if prihlaseny == None:
+        return render_template('/html/neprihlaseny_uzivatel.html',
+                               prihlaseny=prihlaseny
+                               )
+
     return render_template('/html/objednani.html',
                            produkty = produkty,
                            restaurace = restaurace,
                            show_limited = show_limited,
                            prihlaseny=prihlaseny
                            )
+
 
 @app.get("/registrace")
 def view_registrace():
