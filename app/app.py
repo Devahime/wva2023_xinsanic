@@ -147,13 +147,13 @@ def view_produkty_page():
     show_limited = request.args.get("limited", False, bool)
 
     if show_unavailable:
-        produkty = ProduktyService.get_nadchazejici_produkty(restaurace_id)
+            produkty = ProduktyService.get_nadchazejici_produkty(restaurace_id)
     elif show_upcoming:
-        produkty = ProduktyService.get_nedostupne_produkty(restaurace_id)
+            produkty = ProduktyService.get_nedostupne_produkty(restaurace_id)
     elif show_limited:
-        produkty = ProduktyService.get_limitovane_dostupne(restaurace_id)
+            produkty = ProduktyService.get_limitovane_dostupne(restaurace_id)
     else:
-        produkty = ProduktyService.get_zobrazit_dostupne(restaurace_id)
+            produkty = ProduktyService.get_zobrazit_dostupne(restaurace_id)
 
     return render_template('/html/produkty.html',
                            produkty=produkty,
@@ -163,6 +163,7 @@ def view_produkty_page():
                            show_limited=show_limited,
                            prihlaseny=prihlaseny
                            )
+
 
 @app.route('/objednat')
 def view_objednat_page():
@@ -192,7 +193,7 @@ def view_registrace():
 def action_registrace():
 
     data = request.form.to_dict()
-    
+
     if 'name' not in data or 'surname' not in data:
         return render_template('/html/menu/registrace.html', error='Invalid data.')
 
@@ -200,12 +201,6 @@ def action_registrace():
         return render_template('/html/menu/registrace.html', error='Uživatel s tímto telefonním číslem je již zaregistrován.')
 
     if 'adresa' not in data:
-        return render_template('/html/menu/registrace.html', error='Invalid data.')
-
-    if 'mesto' not in data:
-        return render_template('/html/menu/registrace.html', error='Invalid data.')
-
-    if 'psc' not in data:
         return render_template('/html/menu/registrace.html', error='Invalid data.')
 
     # snaha zahashovat heslo pres bcrypt
@@ -227,7 +222,7 @@ def view_prihlaseni():
 def action_prihlaseni():
 
     data = request.form.to_dict()
-    
+
     if not data['telefon']:
         return render_template('/html/menu/prihlaseni.html', error='Nezadali jste tel. cislo.')
 

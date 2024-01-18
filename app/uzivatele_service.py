@@ -55,8 +55,8 @@ class UzivateleService:
 
         count = cur.execute('SELECT COUNT(*) FROM uzivatel').fetchone()[0] +1
 
-        cur.execute('INSERT INTO uzivatel (user_id, jmeno, prijmeni, telefon) VALUES (?, ?, ?, ?)', [count, data['name'], data['surname'], data['telefon'], data['adresa']])
-        
+        cur.execute('INSERT INTO uzivatel (user_id, jmeno, prijmeni, telefon, adresa) VALUES (?, ?, ?, ?, ?)', [count, data['name'], data['surname'], data['telefon'], data['adresa']])
+
         # TODO: Nastavit heslo_id
         cur.execute('INSERT INTO heslo (user_id, heslo) VALUES (?, ?)', [count, data['heslo']])
         cur.execute('INSERT INTO role_uzivatele (role_id, uzivatele_id) VALUES (?, ?)', [4, count])
