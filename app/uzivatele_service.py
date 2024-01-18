@@ -30,11 +30,20 @@ class UzivateleService:
         return True
 
     @staticmethod
+    def get_uzivatel_by_id(user_id: str):
+        db = get_db()
+
+        cur = db.cursor()
+        user = cur.execute('SELECT uzivatel.user_id, jmeno, prijmeni, heslo.heslo FROM uzivatel LEFT JOIN heslo on heslo.user_id = uzivatel.user_id WHERE uzivatel.user_id = ?', [user_id]).fetchone()
+
+        return None if user == None else { 'user_id': user[0], 'name': user[1], 'surname': user[2], 'heslo': user[3] }
+
+    @staticmethod
     def get_uzivatel_by_phone(phone: str):
         db = get_db()
 
         cur = db.cursor()
-        user = cur.execute('SELECT user_id, jmeno, prijmeni, heslo.heslo FROM uzivatel WHERE uzivatel.telefon = ? LEFT JOIN heslo on heslo.user_id = uzivatel.user_id', [phone]).fetchone()
+        user = cur.execute('SELECT uzivatel.user_id, jmeno, prijmeni, heslo.heslo FROM uzivatel LEFT JOIN heslo on heslo.user_id = uzivatel.user_id WHERE uzivatel.telefon = ?', [phone]).fetchone()
 
         return None if user == None else { 'user_id': user[0], 'name': user[1], 'surname': user[2], 'heslo': user[3] }
     
@@ -44,14 +53,14 @@ class UzivateleService:
 
         cur = db.cursor()
 
-        count = cur.execute('SELECT COUNT(*) FROM uzivatel').fetchone()[0]
+        count = cur.execute('SELECT COUNT(*) FROM uzivatel').fetchone()[0] +1
 
         cur.execute('INSERT INTO uzivatel (user_id, jmeno, prijmeni, telefon) VALUES (?, ?, ?, ?)', [count, data['name'], data['surname'], data['telefon']])
         
         # TODO: Nastavit heslo_id
         cur.execute('INSERT INTO heslo (user_id, heslo) VALUES (?, ?)', [count, data['heslo']])
 
-        user = cur.execute(f'SELECT user_id, jmeno, prijmeni FROM uzivatel WHERE user_id = ?', count).fetchone()
+        user = cur.execute(f'SELECT user_id, jmeno, prijmeni FROM uzivatel WHERE user_id = ?', [count]).fetchone()
         db.commit()
         return { 'user_id': user[0], 'name': user[1], 'surname': user[2] }
 

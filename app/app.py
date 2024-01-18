@@ -131,7 +131,7 @@ def action_registrace():
     if 'name' not in data or 'surname' not in data:
         return render_template('/html/menu/registrace.html', error='Invalid data.')
 
-    if UzivateleService.get_uzivatel_by_phone(data['telefon']) == None:
+    if UzivateleService.get_uzivatel_by_phone(data['telefon']) != None:
         return render_template('/html/menu/registrace.html', error='Uživatel s tímto telefonním číslem je již zaregistrován.')
 
     if 'adresa' not in data:
@@ -171,10 +171,7 @@ def action_prihlaseni():
 
     user = UzivateleService.get_uzivatel_by_phone(data['telefon'])
 
-    # TODO: Kontrolovat heslo uzivatele
-    # TODO: Pouzivat Timing attack safe porovnani
-    # TODO: Pouzivat lepsi hashovani
-    if user == None or hash(data['heslo']) != data['heslo']:
+    if user == None or not bcrypt.checkpw(data['heslo'], user['heslo'].decode("utf-8")):
         return render_template('/html/menu/prihlaseni.html', error='Špatné údaje')
 
     response = make_response(redirect('/'))
@@ -196,10 +193,8 @@ def start_session():
     print(f'Session user ID: {user_id}')
 
     if user_id is not None:
-        # TODO: Najit uzivatele podle user_id pomoci UzivateleService
-        # user = UzivateleService.get_uzivatel(user_id)
-        # print(f'found user {user.id} from session')
-        pass
+        user = UzivateleService.get_uzivatel_by_id(user_id)
+        print(f'found user {user["user_id"]} from session')
 
     return user
 
