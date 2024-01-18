@@ -22,16 +22,17 @@
         <div id="header_buttons">
             <button>
                 <div class="column">
-                    <a href="{{url_for('napistenam')}}" span class="button-text">Napiste nam</a>
+                    <span class="button-text">Napiste nam</span>
                 </div>
                 <div class="column">
                     <span class="material-symbols-outlined">mail</span>
                 </div>
             </button>
+            <a  href = "{{url_for('view_prihlaseni')}}"  class="profile-link">
             <button>
                 <div class="column">
-                    <a href="{{url_for('prihlaseni')}}" class="button-text">Přihlášení</a>
-                    <span class="button-subtext">Registrace</span><!--vlozit odkaz na registrace.html-->
+                    <span class="button-text">Přihlášení</span>
+                    <span class="button-subtext">Registrace</span>
                 </div>
                 <div class="column">
                     <span class="material-symbols-outlined">
@@ -39,6 +40,7 @@
                     </span>
                 </div>
             </button>
+            </a>
         </div>
     </header>
     <main>

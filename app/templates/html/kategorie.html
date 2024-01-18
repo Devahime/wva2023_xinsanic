@@ -1,5 +1,8 @@
-{% extends '/html/prihlaseny_header.html' %}
-
+{% if user_authenticated %}
+    {% extends '/html/prihlaseny_header.html' %}
+{% else %}
+    {% extends '/html/neprihlaseny_header.html' %}
+{% endif %}
 {% block kategorie %}
 <div id="categories">
     <a href="{{url_for('index', kategorie_id=1)}}">Česká kuchyně</a>

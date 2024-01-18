@@ -16,6 +16,10 @@ app.config['DEBUG'] = True
 app.config.from_object('config')
 database.init_app(app)
 
+
+def check_user_authentication():
+    user_id_cookie = request.cookies.get('connect.sid')
+    return user_id_cookie is not None
 @app.route('/')
 def index():
     #return '<a href="http://127.0.0.1:5000/html/index.html">Dovážková služba</a>'
@@ -24,9 +28,13 @@ def index():
 
     restaurace = RestauraceService.get_all(kategorie_id)
     kategorie = RestauraceService.get_category_name(kategorie_id)
+
+    user_authenticated = check_user_authentication()
+
     return render_template('/html/index.html',
                            restaurace=restaurace,
-                           kategorie = kategorie
+                           kategorie = kategorie,
+                           user_authenticated=user_authenticated
                            )
 
 @app.route('/mujprofil')
@@ -171,7 +179,7 @@ def action_prihlaseni():
 
     user = UzivateleService.get_uzivatel_by_phone(data['telefon'])
 
-    if user == None or not bcrypt.checkpw(data['heslo'], user['heslo'].decode("utf-8")):
+    if user is None or not bcrypt.checkpw(data['heslo'].encode('utf-8'), user['heslo']):
         return render_template('/html/menu/prihlaseni.html', error='Špatné údaje')
 
     response = make_response(redirect('/'))
@@ -213,6 +221,22 @@ def update_stav_objednavky():
     return redirect('/vyber')
 
 
+@app.route('/some-protected-route')
+def protected_route():
+    user_id = request.cookies.get('connect.sid')
+
+    if user_id:
+        # User is logged in, you can retrieve additional user information using the user_id
+        user = UzivateleService.uzivatel_podle_id_smazu_pak(int(user_id))
+        if user:
+            # User is authenticated
+            return f"Hello {user['jmeno']}, you are logged in!"
+        else:
+            # User not found, handle the situation accordingly
+            return "User not found."
+    else:
+        # User is not logged in, redirect to login page or handle as needed
+        return redirect('/prihlaseni')
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
