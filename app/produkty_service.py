@@ -60,4 +60,8 @@ class ProduktyService:
 
         return db.execute(sql, arguments).fetchall()
 
-
+    @staticmethod
+    def funkce_na_soucet():
+        db = get_db()
+        sql = "SELECT produkt_id, cena FROM produkt"
+        return db.execute(sql).fetchall()

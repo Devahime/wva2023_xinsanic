@@ -271,17 +271,39 @@ def protected_route():
     user_id = request.cookies.get('connect.sid')
 
     if user_id:
-        # User is logged in, you can retrieve additional user information using the user_id
         user = UzivateleService.najit_uzivatele(int(user_id))
         if user:
-            # User is authenticated
             return f"Hello {user['jmeno']}, you are logged in!"
         else:
-            # User not found, handle the situation accordingly
             return "User not found."
     else:
-        # User is not logged in, redirect to login page or handle as needed
         return redirect('/prihlaseni')
+
+@app.route('/objednat', methods=['POST'])
+def objednat():
+    prihlaseny_user_id = request.form.get('prihlaseny_uzivatel')
+    stav = request.form.get('stav')
+
+    product_quantities = {}
+    for key, value in request.form.items():
+        if key.startswith('quantity_'):
+            product_id = key.split('_')[1]
+            product_quantities[product_id] = int(value)
+
+    total_cost = calculate_total_cost(product_quantities)
+
+    print(f"User ID: {prihlaseny_user_id}")
+    print(f"Stav: {stav}")
+    print("Product Quantities:", product_quantities)
+    print(f"Total Cost: {total_cost}")
+
+    return "Order submitted successfully!"
+
+def calculate_total_cost(product_quantities):
+    product_prices = {str(row['produkt_id']): float(row['cena']) for row in ProduktyService.funkce_na_soucet()}
+
+    total_cost = sum(product_prices[product_id] * quantity for product_id, quantity in product_quantities.items())
+    return total_cost
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

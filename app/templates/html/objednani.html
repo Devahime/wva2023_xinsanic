@@ -22,44 +22,41 @@ Objednání
 <a href="?restaurace_id={{ restaurace.restaurace_id }}&limited=true"
     class="{{ 'active' if show_limited else '' }}">Limited</a>
 
-<table class="objednani">
-    <tr>
-        <th>Název jídla</th>
-        <th>Popis</th>
-        <th>Cena</th>
-        <th>Kategorie</th>
-    </tr>
-    {% for produkt in produkty %}
-    <tr>
-        <td>{{produkt.nazev}}</td>
-        <td>{{produkt.popis}}</td>
-        <td>{{produkt.cena}}</td>
-        <td class="quantity-input">
-            <div class="quantity-btn" onclick="decreaseQuantity(this)">-</div>
-            <div class="quantity-value" contenteditable="true">0</div>
-            <div class="quantity-btn" onclick="increaseQuantity(this)">+</div>
-        </td>
-    </tr>
-    {% endfor %}
-</table>
-<button class="order-btn">Objednat</button>
+
+<form method="POST" action="/objednat">
+    <input type="hidden" name="prihlaseny_uzivatel" value="{{prihlaseny.user_id}}">
+    <input type="hidden" name="stav" value="volna">
+    <table class="objednani">
+        <tr>
+            <th>Název jídla</th>
+            <th>Popis</th>
+            <th>Cena</th>
+            <th>Množství</th>
+        </tr>
+        {% for produkt in produkty %}
+        <input type="hidden" name="product_{{ produkt.produkt_id }}" value="{{ produkt.produkt_id }}">
+        <tr>
+            <td>{{produkt.nazev}}</td>
+            <td>{{produkt.popis}}</td>
+            <td>{{produkt.cena}}</td>
+
+            <td class="quantity-input">
+                <input type="number" name="quantity_{{ produkt.produkt_id }}" value="0" min="0" step="1" onchange="updateHiddenInput('{{ produkt.produkt_id }}')">
+            </td>
+        </tr>
+        {% endfor %}
+    </table><button type="submit" class="order-btn">Objednat</button>
+</form>
 {% endif %}
 {% endblock %}
 
 {% block script %}
 <script>
-    function increaseQuantity(element) {
-        var quantityElement = element.parentNode.querySelector('.quantity-value');
-        var quantity = parseInt(quantityElement.innerText, 10);
-        quantityElement.innerText = quantity + 1;
-    }
 
-    function decreaseQuantity(element) {
-        var quantityElement = element.parentNode.querySelector('.quantity-value');
-        var quantity = parseInt(quantityElement.innerText, 10);
-        if (quantity > 0) {
-            quantityElement.innerText = quantity - 1;
-        }
+    function updateHiddenInput(productId) {
+        var quantityInput = document.querySelector('input[name="quantity_' + productId + '"]');
+        var hiddenInput = document.querySelector('input[name="product_' + productId + '"]');
+        hiddenInput.value = quantityInput.value;
     }
 </script>
 {% endblock %}
