@@ -6,11 +6,16 @@ Objednávky
 <div class="container">
     <div class="left-section">
         <nav>
-            <a href="{{url_for('view_profil_page')}}">Osobní údaje</a>
-            <a href="{{url_for('view_objednavka_page')}}">Objednávky</a>
-            <a href="{{url_for('view_vyber_page')}}">Výběr objednávek</a>
-            <a href="{{url_for('view_statistika_page')}}">Statistika</a>
-            <a href="{{url_for('view_prehled_uzivatelu_page')}}">Uživatelé</a>
+            <a href="{{ url_for('view_profil_page') }}">Osobní údaje</a>
+            <a href="{{ url_for('view_objednavka_page') }}">Objednávky</a>
+            {% if prihlaseny.nazev == 'kuryr' %}
+            <a href="{{ url_for('view_vyber_page') }}">Výběr objednávek</a>
+            {% endif %}
+            {{prihlaseny.nazev }}
+            {% if prihlaseny.nazev == 'admin' %}
+            <a href="{{ url_for('view_statistika_page') }}">Statistika</a>
+            <a href="{{ url_for('view_prehled_uzivatelu_page') }}">Uživatelé</a>
+            {% endif %}
         </nav>
     </div>
     <div class="right-section">

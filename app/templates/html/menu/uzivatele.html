@@ -3,15 +3,18 @@
 Statistika
 {% endblock %}
 {% block main %}
-<form method="POST" action="{{ url_for('update_role') }}">
 <div class="container">
     <div class="left-section">
         <nav>
-            <a href="{{url_for('view_profil_page')}}">Osobní údaje</a>
-            <a href="{{url_for('view_objednavka_page')}}">Objednávky</a>
-            <a href="{{url_for('view_vyber_page')}}">Výběr objednávek</a>
-            <a href="{{url_for('view_statistika_page')}}">Statistika</a>
-            <a href="{{url_for('view_prehled_uzivatelu_page')}}">Uživatelé</a>
+            <a href="{{ url_for('view_profil_page') }}">Osobní údaje</a>
+            <a href="{{ url_for('view_objednavka_page') }}">Objednávky</a>
+            {% if prihlaseny.nazev == 'kuryr' or prihlaseny.nazev == 'admin' %}
+            <a href="{{ url_for('view_vyber_page') }}">Výběr objednávek</a>
+            {% endif %}
+            {% if prihlaseny.nazev == 'admin' %}
+            <a href="{{ url_for('view_statistika_page') }}">Statistika</a>
+            <a href="{{ url_for('view_prehled_uzivatelu_page') }}">Uživatelé</a>
+            {% endif %}
         </nav>
     </div>
 
@@ -26,26 +29,27 @@ Statistika
                 <th>Upravit</th>
             </tr>
             {% for uzivatel in uzivatele %}
-            <tr>
-                <td>{{ uzivatel.user_id }}</td>
-                <td>{{ uzivatel.prijmeni }}</td>
-                <td>{{ uzivatel.jmeno }}</td>
-                <td>
-                    <select name="role_select">
-                        <option value="" {% if not uzivatel.nazev_role %}selected{% endif %}>Vyberte roli</option>
-                        {% for prvek in role %}
-                        <option value="{{ prvek.role_id }}" {% if prvek.nazev==uzivatel.nazev_role %}selected{% endif
-                            %}>{{ prvek.nazev }}</option>
-                        {% endfor %}
-                    </select>
-                </td>
-                <td>
-                    <button type="submit" name="submit_button" value="{{ uzivatel.user_id }}">Uložit</button>
-                </td>
-            </tr>
+            <form method="POST" action="{{ url_for('update_role') }}">
+                <tr>
+                    <td>{{ uzivatel.user_id }}</td>
+                    <td>{{ uzivatel.prijmeni }}</td>
+                    <td>{{ uzivatel.jmeno }}</td>
+                    <td>
+                        <select name="role_select">
+                            <option value="" {% if not uzivatel.nazev_role %}selected{% endif %}>Vyberte roli</option>
+                            {% for prvek in role %}
+                            <option value="{{ prvek.role_id }}" {% if prvek.nazev==uzivatel.nazev_role %}selected{%
+                                endif %}>{{ prvek.nazev }}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td>
+                        <button type="submit" name="submit_button" value="{{ uzivatel.user_id }}">Uložit</button>
+                    </td>
+                </tr>
+            </form>
             {% endfor %}
         </table>
     </div>
 </div>
-</form>
 {% endblock %}

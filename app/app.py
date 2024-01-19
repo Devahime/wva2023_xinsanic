@@ -110,23 +110,26 @@ def view_vyber_page():
         return render_template('/html/neprihlaseny_uzivatel.html',
                                prihlaseny=prihlaseny
                                )
+
     if get_role_prihlaseneho_uzivatele() != 'kuryr' or get_role_prihlaseneho_uzivatele() != 'admin':
-        return render_template('/html/neopraveneny_pristup.html',
-                               prihlaseny=prihlaseny
-                               )
 
-    vyrizene = ObjednavkaService.get_moje_vyrizene(int(request.cookies.get('connect.sid')))
-    nevyrizene = ObjednavkaService.get_moje_nevyrizene(int(request.cookies.get('connect.sid')))
+
+        vyrizene = ObjednavkaService.get_moje_vyrizene(int(request.cookies.get('connect.sid')))
+        nevyrizene = ObjednavkaService.get_moje_nevyrizene(int(request.cookies.get('connect.sid')))
 
 
 
-    return render_template('/html/menu/vyberobjednavek.html',
+        return render_template('/html/menu/vyberobjednavek.html',
                            nevyrizene=nevyrizene,
                            volne=volne,
                            vyrizene=vyrizene,
                            prihlaseny=prihlaseny
                            )
 
+    else:
+        return render_template('/html/neopraveneny_pristup.html',
+                           prihlaseny=prihlaseny
+                           )
 @app.route('/statistika')
 def view_statistika_page():
     pocet_objednavek = ObjednavkaService.get_pocet()

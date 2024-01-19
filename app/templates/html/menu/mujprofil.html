@@ -6,46 +6,34 @@ Můj profil
 <div class="container">
     <div class="left-section">
         <nav>
-            <a href="{{url_for('view_profil_page')}}">Osobní údaje</a>
-            <a href="{{url_for('view_objednavka_page')}}">Objednávky</a>
-            <a href="{{url_for('view_vyber_page')}}">Výběr objednávek</a>
-            <a href="{{url_for('view_statistika_page')}}">Statistika</a>
-            <a href="{{url_for('view_prehled_uzivatelu_page')}}">Uživatelé</a>
+            <a href="{{ url_for('view_profil_page') }}">Osobní údaje</a>
+            <a href="{{ url_for('view_objednavka_page') }}">Objednávky</a>
+            {% if prihlaseny.nazev == 'kuryr' or prihlaseny.nazev == 'admin' %}
+            <a href="{{ url_for('view_vyber_page') }}">Výběr objednávek</a>
+            {% endif %}
+            {% if prihlaseny.nazev == 'admin' %}
+            <a href="{{ url_for('view_statistika_page') }}">Statistika</a>
+            <a href="{{ url_for('view_prehled_uzivatelu_page') }}">Uživatelé</a>
+            {% endif %}
         </nav>
     </div>
     <div class="right-section">
         <form>
             <div class="form-group">
                 <label for="jmeno">Jméno:</label>
-                <input type="text" id="jmeno" name="jmeno" required>
+                <input type="text" id="jmeno" name="jmeno" value="{{ prihlaseny.jmeno }} " readonly>
             </div>
             <div class="form-group">
                 <label for="prijmeni">Příjmení:</label>
-                <input type="text" id="prijmeni" name="prijmeni" required>
+                <input type="text" id="prijmeni" name="prijmeni" value="{{ prihlaseny.prijmeni }} " readonly>
             </div>
             <div class="form-group">
                 <label for="telefon">Telefon:</label>
-                <input type="tel" id="telefon" name="telefon" required>
+                <input type="tel" id="telefon" name="telefon" value="{{ prihlaseny.telefon }} " readonly>
             </div>
             <div class="form-group">
-                <label for="ulice">Ulice:</label>
-                <input type="text" id="ulice" name="ulice" required>
-            </div>
-            <div class="form-group">
-                <label for="cp">Č. p.:</label>
-                <input type="text" id="cp" name="cp" required>
-            </div>
-            <div class="form-group">
-                <label for="mesto">Město:</label>
-                <input type="text" id="mesto" name="mesto" required>
-            </div>
-            <div class="form-group">
-                <label for="psc">PSČ:</label>
-                <input type="text" id="psc" name="psc" required>
-            </div>
-            <div class="form-group">
-                <label for="stat">Stát:</label>
-                <input type="text" id="stat" name="stat" required>
+                <label for="ulice">Adresa:</label>
+                <input type="text" id="ulice" name="ulice" value="{{ prihlaseny.adresa }} " readonly>
             </div>
         </form>
     </div>
