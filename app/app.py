@@ -382,5 +382,40 @@ def calculate_total_cost(product_quantities):
     total_cost = sum(product_prices[product_id] * quantity for product_id, quantity in product_quantities.items())
     return total_cost
 
+
+@app.route('/pridat_produkt')
+def view_pridat_produkt():
+
+    prihlaseny = get_logged_in_user()
+
+    if get_role_prihlaseneho_uzivatele() != 'zamestnanec':
+        return render_template('/html/neopraveneny_pristup.html',
+                               prihlaseny=prihlaseny
+                               )
+
+    if prihlaseny == None:
+        return render_template('/html/neprihlaseny_uzivatel.html',
+                               prihlaseny=prihlaseny
+                               )
+
+
+    return render_template('/html/pridat_nabidku.html',
+                           prihlaseny=prihlaseny
+                           )
+
+@app.route('/pridat_produkt', methods=['POST'])
+def add_produkt():
+    restaurace_id = RestauraceService.najit_restauraci(int(request.cookies.get('connect.sid')))
+
+    nazev = request.form.get('nazev')
+    popis = request.form.get('popis')
+    cena = request.form.get('cena')
+    dostupny_od = request.form.get('dostupny_od')
+    dostupne_do = request.form.get('dostupne_do')
+    obrazek = request.form.get('obrazek')
+
+    ProduktyService.pridat_produkt(nazev, popis, cena, dostupny_od, dostupne_do, obrazek, restaurace_id)
+    return redirect('/')
+
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

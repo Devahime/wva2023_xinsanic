@@ -8,13 +8,15 @@ Objednávky
         <nav>
             <a href="{{ url_for('view_profil_page') }}">Osobní údaje</a>
             <a href="{{ url_for('view_objednavka_page') }}">Objednávky</a>
-            {% if prihlaseny.nazev == 'kuryr' %}
+            {% if prihlaseny.nazev == 'kuryr' or prihlaseny.nazev == 'admin' %}
             <a href="{{ url_for('view_vyber_page') }}">Výběr objednávek</a>
             {% endif %}
-            {{prihlaseny.nazev }}
             {% if prihlaseny.nazev == 'admin' %}
             <a href="{{ url_for('view_statistika_page') }}">Statistika</a>
             <a href="{{ url_for('view_prehled_uzivatelu_page') }}">Uživatelé</a>
+            {% endif %}
+            {% if prihlaseny.nazev == 'zamestnanec' %}
+            <a href="{{ url_for('view_pridat_produkt') }}">Přidat produkt</a>
             {% endif %}
         </nav>
     </div>

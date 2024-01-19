@@ -86,3 +86,11 @@ class ProduktyService:
                 (quantity, order_id, product_id)
             )
             db.commit()
+
+    @staticmethod
+    def pridat_produkt(nazev, popis, cena, dostupny_od, dostupne_do, obrazek, restaurace_id):
+            db = get_db()
+            db.execute(
+                'INSERT INTO produkt (nazev, popis, cena, dostupny_od, dostupne_do, obrazek, restaurace_id) VALUES (?, ?, ?, ?, ?, ?, ?)',
+                (nazev, popis, cena, dostupny_od, dostupne_do, obrazek, restaurace_id))
+            db.commit()

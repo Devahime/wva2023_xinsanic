@@ -1,6 +1,6 @@
 {% extends 'html/kategorie.html' %}
 {% block title %}
-Můj profil
+Statistika
 {% endblock %}
 {% block main %}
 <div class="container">
@@ -20,24 +20,36 @@ Můj profil
             {% endif %}
         </nav>
     </div>
+
     <div class="right-section">
-        <form>
+        <h2>Přidat nový produkt</h2>
+        <br>
+        <form action="{{ url_for('add_produkt') }}" method="post">
             <div class="form-group">
-                <label for="jmeno">Jméno:</label>
-                <input type="text" id="jmeno" name="jmeno" value="{{ prihlaseny.jmeno }} " readonly>
+                <label for="nazev">Název:</label>
+                <input type="text" id="nazev" name="nazev" required>
             </div>
             <div class="form-group">
-                <label for="prijmeni">Příjmení:</label>
-                <input type="text" id="prijmeni" name="prijmeni" value="{{ prihlaseny.prijmeni }} " readonly>
+                <label for="popis">Popis:</label>
+                <input id="text" name="popis" required></input>
             </div>
             <div class="form-group">
-                <label for="telefon">Telefon:</label>
-                <input type="tel" id="telefon" name="telefon" value="{{ prihlaseny.telefon }} " readonly>
+                <label for="cena">Cena:</label>
+                <input type="number" id="cena" name="cena" required>
             </div>
             <div class="form-group">
-                <label for="ulice">Adresa:</label>
-                <input type="text" id="ulice" name="ulice" value="{{ prihlaseny.adresa }} " readonly>
+                <label for="dostupny_od">Dostupný od:</label>
+                <input type="text" id="dostupny_od" name="dostupny_od" required>
             </div>
+            <div class="form-group">
+                <label for="dostupne_do">Dostupné do:</label>
+                <input type="text" id="dostupne_do" name="dostupne_do" required>
+            </div>
+            <div class="form-group">
+                <label for="dostupne_do">Obrázek</label>
+                <input type="text" id="obrazek" name="obrazek" required>
+            </div>
+            <button type="submit">Přidat produkt</button>
         </form>
     </div>
 </div>

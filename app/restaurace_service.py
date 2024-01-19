@@ -37,3 +37,10 @@ class RestauraceService:
             "SELECT * FROM restaurace WHERE restaurace_id = ?",
             [restaurace_id]
         ).fetchone()
+
+    @staticmethod
+    def najit_restauraci(user_id):
+        db = get_db()
+        sql = "SELECT * FROM restaurace WHERE uzivatel_id = ?"
+        return db.execute(sql, (user_id,)).fetchone()[0]
+
