@@ -258,7 +258,7 @@ input {
 }
 
 .order-btn:hover {
-    background-color: #0056b3;
+    background-color: green;
 }
 
 table {
@@ -275,7 +275,7 @@ td {
 }
 
 th {
-    background-color: #2980b9;
+    background-color: green;
     color: white;
     font-weight: bold;
 }
